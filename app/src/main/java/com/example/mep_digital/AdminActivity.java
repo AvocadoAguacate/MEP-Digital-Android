@@ -1,6 +1,8 @@
 package com.example.mep_digital;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -32,6 +34,16 @@ public class AdminActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    public void goTeacherDetail(View view){
+        Intent intent = new Intent(binding.getRoot().getContext(), TeacherDetailActivity.class);
+        startActivity(intent);
+    }
+
+    public void goStudentDetail(View view){
+        Intent intent = new Intent(binding.getRoot().getContext(), StudentDetailActivity.class);
+        startActivity(intent);
     }
 
 }
