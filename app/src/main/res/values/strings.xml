@@ -4,28 +4,28 @@
     <string name="password">Contraseña</string>
     <string name="incorrect_user_password">Usuario o contraseña erroneos</string>
     <string name="login_button">Ingresar</string>
-    <string name="new_teacher_button">Nuevo profesor</string>
-    <string name="new_student_button">Nuevo estudiante</string>
     <string name="title_activity_admin">Administrador</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Profesores</string>
-    <string name="title_notifications">Estudiantes</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <string-array name="login_array">
         <item>Administrador</item>
         <item>Profesor</item>
         <item>Estudiante</item>
     </string-array>
     <string name="select_type_user">Selecciona tu tipo de usuario</string>
-    <string name="id_number">Cédula</string>
+    <string name="id_number">ID</string>
+    <string name="teacher">teacher string</string>
     <string name="name">Nombre</string>
-    <string name="last_name_1">Primer apellido</string>
-    <string name="last_name_2">Segundo apellido</string>
-    <string name="email">Correo electrónico</string>
-    <string name="teacher">Profesor</string>
+    <string name="last_name_1">Primer Apellido</string>
+    <string name="last_name_2">Segundo Apellido</string>
+    <string name="email">Correo electronico</string>
+    <string name="qualification">Calificacion</string>
+    <string name="list_courses">Lista de cursos</string>
     <string name="cancel_button">Cancelar</string>
     <string name="save_button">Guardar</string>
     <string name="delete_button">Eliminar</string>
-    <string name="qualification">Calificación promedio</string>
-    <string name="list_courses">Lista de cursos</string>
-    <string name="student">Estudiante</string>
+    <string name="new_student_button">New Student Button</string>
+    <string name="student">string student</string>
+    <string name="new_teacher_button">new teacher button</string>
 </resources>
