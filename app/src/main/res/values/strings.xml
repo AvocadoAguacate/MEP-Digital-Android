@@ -6,8 +6,8 @@
     <string name="login_button">Ingresar</string>
     <string name="title_activity_admin">Administrador</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Profesores</string>
+    <string name="title_notifications">Estudiantes</string>
     <string-array name="login_array">
         <item>Administrador</item>
         <item>Profesor</item>
@@ -25,7 +25,8 @@
     <string name="cancel_button">Cancelar</string>
     <string name="save_button">Guardar</string>
     <string name="delete_button">Eliminar</string>
-    <string name="new_student_button">New Student Button</string>
+    <string name="new_student_button">Nuevo estudiante</string>
     <string name="student">string student</string>
-    <string name="new_teacher_button">new teacher button</string>
+    <string name="new_teacher_button">Nuevo profesor</string>
+
 </resources>

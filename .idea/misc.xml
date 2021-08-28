@@ -19,6 +19,13 @@
         <entry key="..\:/Users/PC/Desktop/MEP-Digital-Android/app/src/main/res/layout/student_class.xml" value="0.4078125" />
         <entry key="..\:/Users/PC/Desktop/MEP-Digital-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.346875" />
         <entry key="..\:/Users/PC/Desktop/MEP-Digital-Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.346875" />
+        <entry key="app/src/main/res/layout/activity_admin.xml" value="0.34148550724637683" />
+        <entry key="app/src/main/res/layout/activity_student_detail.xml" value="0.34148550724637683" />
+        <entry key="app/src/main/res/layout/activity_teacher_detail.xml" value="0.34148550724637683" />
+        <entry key="app/src/main/res/layout/fragment_admin_student.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/layout/fragment_admin_teacher.xml" value="0.34148550724637683" />
+        <entry key="app/src/main/res/layout/studen_list_class.xml" value="0.34148550724637683" />
+        <entry key="app/src/main/res/layout/student_class.xml" value="0.34148550724637683" />
       </map>
     </option>
   </component>
