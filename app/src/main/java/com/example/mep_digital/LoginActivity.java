@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Default: no entrar
         postResult = false;
 
         //TextField
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         //Aqui decido que tipo de usuario es
         if(checkLogin()){
             postLogin();
-
             if(postResult){
                 if(spinner.getSelectedItem().toString().contains("Adm")) {
                     goToAdminActivity();
@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void postLogin(){
-        boolean result = false;
         String userType = LoginType.admin.toString();
         if (spinner.getSelectedItem().toString().contains("Adm")){
             userType = LoginType.admin.toString();

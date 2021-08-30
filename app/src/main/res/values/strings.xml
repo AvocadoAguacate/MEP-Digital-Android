@@ -26,7 +26,14 @@
     <string name="save_button">Guardar</string>
     <string name="delete_button">Eliminar</string>
     <string name="new_student_button">Nuevo estudiante</string>
-    <string name="student">string student</string>
+    <string name="student">Estudiante</string>
     <string name="new_teacher_button">Nuevo profesor</string>
-
+    <string-array name="grade_array">
+        <item>Primero</item>
+        <item>Segundo</item>
+        <item>Tercero</item>
+        <item>Cuarto</item>
+        <item>Quinto</item>
+        <item>Sexto</item>
+    </string-array>
 </resources>

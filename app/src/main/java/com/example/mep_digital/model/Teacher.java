@@ -1,49 +1,73 @@
 package com.example.mep_digital.model;
 
+import java.util.List;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 
-public class Student implements Serializable {
+public class Teacher {
 
-    @SerializedName("_id")
-    private String _id;
+    @SerializedName("idx")
+    @Expose
+    private String idx;
     @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("email")
+    @Expose
     private String email;
     @SerializedName("password")
+    @Expose
     private String password;
     @SerializedName("name")
+    @Expose
     private String name;
     @SerializedName("lastname")
+    @Expose
     private String lastname;
-    @SerializedName("grade")
-    private Integer grade;
+    @SerializedName("ratings")
+    @Expose
+    private List<Rating> ratings = null;
     @SerializedName("__v")
+    @Expose
     private Integer v;
 
-    public Student(String _id, String id, String email,
-                   String password, String name,
-                   String lastname, Integer grade,
-                   Integer v) {
-        this._id = _id;
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public Teacher() {
+    }
+
+    /**
+     *
+     * @param password
+     * @param ratings
+     * @param v
+     * @param name
+     * @param id
+     * @param idx
+     * @param email
+     * @param lastname
+     */
+    public Teacher(String idx, String id, String email, String password, String name, String lastname, List<Rating> ratings, Integer v) {
+        super();
+        this.idx = idx;
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.lastname = lastname;
-        this.grade = grade;
+        this.ratings = ratings;
         this.v = v;
     }
 
-
-    public String get_id() {
-        return _id;
+    public String getIdx() {
+        return idx;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setIdx(String idx) {
+        this.idx = idx;
     }
 
     public String getId() {
@@ -86,12 +110,12 @@ public class Student implements Serializable {
         this.lastname = lastname;
     }
 
-    public Integer getGrade() {
-        return grade;
+    public List<Rating> getRatings() {
+        return ratings;
     }
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public Integer getV() {

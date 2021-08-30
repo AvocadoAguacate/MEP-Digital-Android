@@ -1,49 +1,53 @@
 package com.example.mep_digital.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class CreateStudent {
 
-public class Student implements Serializable {
-
-    @SerializedName("_id")
-    private String _id;
     @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("email")
+    @Expose
     private String email;
     @SerializedName("password")
+    @Expose
     private String password;
     @SerializedName("name")
+    @Expose
     private String name;
     @SerializedName("lastname")
+    @Expose
     private String lastname;
     @SerializedName("grade")
+    @Expose
     private Integer grade;
-    @SerializedName("__v")
-    private Integer v;
 
-    public Student(String _id, String id, String email,
-                   String password, String name,
-                   String lastname, Integer grade,
-                   Integer v) {
-        this._id = _id;
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public CreateStudent() {
+    }
+
+    /**
+     *
+     * @param password
+     * @param grade
+     * @param name
+     * @param id
+     * @param email
+     * @param lastname
+     */
+    public CreateStudent(String id, String email, String password, String name, String lastname, Integer grade) {
+        super();
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.lastname = lastname;
         this.grade = grade;
-        this.v = v;
-    }
-
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
     }
 
     public String getId() {
@@ -92,14 +96,6 @@ public class Student implements Serializable {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
-    }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
     }
 
 }
