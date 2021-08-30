@@ -3,14 +3,16 @@ package com.example.mep_digital.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Rating {
+import java.io.Serializable;
+
+public class Rating implements Serializable {
 
     @SerializedName("_id")
     @Expose
     private String _id;
     @SerializedName("student")
     @Expose
-    private Student student;
+    private Student student ;
     @SerializedName("rating")
     @Expose
     private Integer rating;

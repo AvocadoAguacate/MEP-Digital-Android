@@ -119,7 +119,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     public void deleteData(View view){
         String id = idTeacherEditText.getText().toString();
         if(!id.isEmpty()){
-            Call<Message> call = RetrofitClient.getInstance().getMyApi().deleteStudent(id);
+            Call<Message> call = RetrofitClient.getInstance().getMyApi().deleteTeacher(id);
             call.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
