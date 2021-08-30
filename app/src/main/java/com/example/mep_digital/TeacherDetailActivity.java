@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mep_digital.io.RetrofitClient;
@@ -27,6 +28,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private EditText lastName1TeacherEditText;
     private EditText lastName2TeacherEditText;
     private EditText emailTeacherEditText;
+    private TextView teacherDetailTextView;
     private boolean updateMode;
 
     @Override
@@ -41,6 +43,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         lastName1TeacherEditText = findViewById(R.id.lastName1TeacherEditText);
         lastName2TeacherEditText = findViewById(R.id.lastName2TeacherEditText);
         emailTeacherEditText = findViewById(R.id.emailTeacherEditText);
+        teacherDetailTextView = findViewById(R.id.teacherDetailTextView);
 
         //Cargando estudiante
         tryLoadData();
@@ -128,7 +131,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         Message message = response.body();
                         Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                     } catch (Exception e){
-                        Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"No se pudo eliminar", Toast.LENGTH_LONG).show();
                     } finally {
                         finish();
                     }
@@ -153,8 +156,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
             emailTeacherEditText.setText(teacher.getEmail());
             updateMode = true;
         } catch (Exception e){
-            //New teacher
-            Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
+            teacherDetailTextView.setText("Nuevo profesor");
         }
 
 

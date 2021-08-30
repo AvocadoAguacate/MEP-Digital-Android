@@ -15,7 +15,7 @@
     </string-array>
     <string name="select_type_user">Selecciona tu tipo de usuario</string>
     <string name="id_number">ID</string>
-    <string name="teacher">teacher string</string>
+    <string name="teacher">Profesor</string>
     <string name="name">Nombre</string>
     <string name="last_name_1">Primer Apellido</string>
     <string name="last_name_2">Segundo Apellido</string>

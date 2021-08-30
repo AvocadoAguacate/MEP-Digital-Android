@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mep_digital.io.RetrofitClient;
@@ -30,6 +31,7 @@ public class StudentDetailActivity extends AppCompatActivity {
     private EditText lastName2EditText;
     private EditText emailStudentEditText;
     private Spinner studentSelectGradeSpinner;
+    private TextView studentDetailTextView;
     private boolean updateMode;
 
     private Button deleteButton;
@@ -49,6 +51,7 @@ public class StudentDetailActivity extends AppCompatActivity {
         emailStudentEditText = findViewById(R.id.emailStudentEditText);
         studentSelectGradeSpinner = findViewById(R.id.studentSelectGradeSpinner);
         deleteButton = findViewById(R.id.deleteStudentButton);
+        studentDetailTextView = findViewById(R.id.studentDetailTextView);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -144,10 +147,15 @@ public class StudentDetailActivity extends AppCompatActivity {
             call.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
-                    int statusCode = response.code();
-                    Message message = response.body();
-                    Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
-                    finish();
+                    try {
+                        int statusCode = response.code();
+                        Message message = response.body();
+                        Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e){
+                        Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
+                    } finally {
+                        finish();
+                    }
                 }
 
                 @Override
@@ -170,7 +178,7 @@ public class StudentDetailActivity extends AppCompatActivity {
             studentSelectGradeSpinner.setSelection(student.getGrade());
             updateMode = true;
         } catch (Exception e){
-            Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
+            studentDetailTextView.setText("Nuevo estudiante");
         }
 
 
