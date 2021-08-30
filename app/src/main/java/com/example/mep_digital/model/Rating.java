@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Rating {
 
-    @SerializedName("idx")
+    @SerializedName("_id")
     @Expose
-    private String idx;
+    private String _id;
     @SerializedName("student")
     @Expose
     private Student student;
@@ -26,21 +26,21 @@ public class Rating {
      *
      * @param student
      * @param rating
-     * @param idx
+     * @param _id
      */
-    public Rating(String idx, Student student, Integer rating) {
+    public Rating(String _id, Student student, Integer rating) {
         super();
-        this.idx = idx;
+        this._id = _id;
         this.student = student;
         this.rating = rating;
     }
 
-    public String getIdx() {
-        return idx;
+    public String get_id() {
+        return _id;
     }
 
-    public void setIdx(String idx) {
-        this.idx = idx;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public Student getStudent() {

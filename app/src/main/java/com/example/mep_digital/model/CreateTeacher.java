@@ -1,16 +1,11 @@
 package com.example.mep_digital.model;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Teacher implements Serializable {
+public class CreateTeacher {
 
-    @SerializedName("_id")
-    @Expose
-    private String _id;
     @SerializedName("id")
     @Expose
     private String id;
@@ -26,49 +21,34 @@ public class Teacher implements Serializable {
     @SerializedName("lastname")
     @Expose
     private String lastname;
-    @SerializedName("ratings")
+    @SerializedName("grade")
     @Expose
-    private List<Rating> ratings = null;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
+    private Integer grade;
 
     /**
      * No args constructor for use in serialization
      *
      */
-    public Teacher() {
+    public CreateTeacher() {
     }
 
     /**
      *
      * @param password
-     * @param ratings
-     * @param v
+     * @param grade
      * @param name
      * @param id
-     * @param _id
      * @param email
      * @param lastname
      */
-    public Teacher(String _id, String id, String email, String password, String name, String lastname, List<Rating> ratings, Integer v) {
+    public CreateTeacher(String id, String email, String password, String name, String lastname, Integer grade) {
         super();
-        this._id = _id;
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.lastname = lastname;
-        this.ratings = ratings;
-        this.v = v;
-    }
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
+        this.grade = grade;
     }
 
     public String getId() {
@@ -111,20 +91,12 @@ public class Teacher implements Serializable {
         this.lastname = lastname;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
 }

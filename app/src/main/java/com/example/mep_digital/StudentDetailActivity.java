@@ -13,12 +13,9 @@ import android.widget.Toast;
 
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.CreateStudent;
-import com.example.mep_digital.model.ListStudents;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Student;
 import com.example.mep_digital.model.UpdateStudent;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,8 +44,8 @@ public class StudentDetailActivity extends AppCompatActivity {
         //finders
         idStudentEditText = findViewById(R.id.idStudentEditText);
         nameStudentEditText = findViewById(R.id.nameStudentEditText);
-        lastName1EditText = findViewById(R.id.lastName1EditText);
-        lastName2EditText = findViewById(R.id.lastName2EditText);
+        lastName1EditText = findViewById(R.id.lastName1TeacherEditText);
+        lastName2EditText = findViewById(R.id.lastName2TeacherEditText);
         emailStudentEditText = findViewById(R.id.emailStudentEditText);
         studentSelectGradeSpinner = findViewById(R.id.studentSelectGradeSpinner);
         deleteButton = findViewById(R.id.deleteStudentButton);

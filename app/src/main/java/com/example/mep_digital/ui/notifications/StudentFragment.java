@@ -36,7 +36,6 @@ public class StudentFragment extends Fragment {
 
     private FragmentAdminStudentBinding binding;
     private ListView listView;
-    private String selectedTeacher;
     private ListStudents listStudents;
 
 
@@ -84,7 +83,8 @@ public class StudentFragment extends Fragment {
                 listStudents = listResult;
                 ArrayList<String> students = new ArrayList<String>();
                 for (int i = 0; i < listResult.getStudents().size(); i++) {
-                    students.add(listResult.getStudents().get(i).getName() + "\nCédula: " +
+                    students.add(listResult.getStudents().get(i).getName() +
+                            listResult.getStudents().get(i).getLastname() + "\nCédula: " +
                             listResult.getStudents().get(i).getId());
                 }
                 listView.setAdapter(new ArrayAdapter<String>(binding.getRoot().getContext(),
