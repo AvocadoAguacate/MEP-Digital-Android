@@ -39,7 +39,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/lastName1EditText"
+            android:id="@+id/lastName1TeacherEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -48,7 +48,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/lastName2EditText"
+            android:id="@+id/lastName2TeacherEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -94,6 +94,7 @@
             android:id="@+id/saveStudentButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="saveData"
             android:text="@string/save_button" />
 
         <Button

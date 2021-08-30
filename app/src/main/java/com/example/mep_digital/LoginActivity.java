@@ -5,18 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.mep_digital.io.RetrofitClient;
+import com.example.mep_digital.model.LoginPost;
+import com.example.mep_digital.model.LoginReturn;
+import com.example.mep_digital.model.LoginType;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Spinner spinner;
+    private EditText editTextUser;
+    private EditText editTextPassword;
+
+    private boolean postResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Default: no entrar
+        postResult = false;
+
+        //TextField
+        editTextUser=(EditText)findViewById(R.id.editTextUser);
+        editTextPassword=(EditText)findViewById(R.id.editTextPassword);
         //Spniner login type
         spinner=(Spinner)findViewById(R.id.spinnerLogin);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -34,9 +56,19 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void router(View view){
         //Aqui decido que tipo de usuario es
-        if(spinner.getSelectedItem().toString().contains("Adm")) {
-            goToAdminActivity();
+        if(checkLogin()){
+            postLogin();
+            if(postResult){
+                if(spinner.getSelectedItem().toString().contains("Adm")) {
+                    goToAdminActivity();
+                } else if(spinner.getSelectedItem().toString().contains("Est")){
+
+                } else if(spinner.getSelectedItem().toString().contains("Pro")){
+
+                }
+            }
         }
+
     }
 
     /**
@@ -45,5 +77,49 @@ public class LoginActivity extends AppCompatActivity {
     private void goToAdminActivity(){
         Intent intent = new Intent(this,AdminActivity.class);
         startActivity(intent);
+    }
+
+    private boolean checkLogin(){
+        if(editTextUser.getText().toString().isEmpty() ||
+        editTextPassword.getText().toString().isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    private void postLogin(){
+        String userType = LoginType.admin.toString();
+        if (spinner.getSelectedItem().toString().contains("Adm")){
+            userType = LoginType.admin.toString();
+        } else if(spinner.getSelectedItem().toString().contains("Est")){
+            userType = LoginType.student.toString();
+        } else if(spinner.getSelectedItem().toString().contains("Est")){
+            userType = LoginType.teacher.toString();
+        }
+        LoginPost loginPost = new LoginPost(editTextUser.getText().toString(),
+                editTextPassword.getText().toString(),userType);
+        Call<LoginReturn> call = RetrofitClient.getInstance().getMyApi().postLogin(loginPost);
+        call.enqueue(new Callback<LoginReturn>() {
+            @Override
+            public void onResponse(Call<LoginReturn> call, Response<LoginReturn> response) {
+                int statusCode = response.code();
+                LoginReturn loginReturn = response.body();
+                try {
+                    System.out.println(loginReturn.toString());
+                    Toast.makeText(getApplicationContext(), loginReturn.getEmail(),Toast.LENGTH_LONG).show();
+                    postResult = true;
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
+                    postResult = false;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginReturn> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Inicio fallido",Toast.LENGTH_LONG).show();
+                postResult = false;
+            }
+        });
     }
 }
