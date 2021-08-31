@@ -21,8 +21,8 @@
             android:id="@+id/newClassButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="goStudentDetail"
-            android:text="@string/new_student_button" />
+            android:onClick="goClassDetail"
+            android:text="@string/new_course_button" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

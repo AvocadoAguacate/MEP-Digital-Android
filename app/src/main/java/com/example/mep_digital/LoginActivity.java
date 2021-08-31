@@ -26,15 +26,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextUser;
     private EditText editTextPassword;
 
-    private boolean postResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Default: no entrar
-        postResult = false;
 
         //TextField
         editTextUser=(EditText)findViewById(R.id.editTextUser);
@@ -54,19 +51,12 @@ public class LoginActivity extends AppCompatActivity {
      * Escoge la ruta adecuada dependiendo el tipo de usuario
      * @param view
      */
-    public void router(View view){
+    public void login(View view){
         //Aqui decido que tipo de usuario es
         if(checkLogin()){
             postLogin();
-            if(postResult){
-                if(spinner.getSelectedItem().toString().contains("Adm")) {
-                    goToAdminActivity();
-                } else if(spinner.getSelectedItem().toString().contains("Est")){
-
-                } else if(spinner.getSelectedItem().toString().contains("Pro")){
-
-                }
-            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Faltan datos por ingresar",Toast.LENGTH_LONG).show();
         }
 
     }
@@ -107,10 +97,10 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     System.out.println(loginReturn.toString());
                     Toast.makeText(getApplicationContext(), loginReturn.getEmail(),Toast.LENGTH_LONG).show();
-                    postResult = true;
+                    router();
+
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
-                    postResult = false;
+                    Toast.makeText(getApplicationContext(), "Inicio fallido",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -118,8 +108,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginReturn> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Inicio fallido",Toast.LENGTH_LONG).show();
-                postResult = false;
             }
         });
+    }
+
+    private void router(){
+        if(spinner.getSelectedItem().toString().contains("Adm")){
+            goToAdminActivity();
+        } else if (spinner.getSelectedItem().toString().contains("Est")) {
+            //goToStudentActivity();
+        } else if (spinner.getSelectedItem().toString().contains("Pro")) {
+            //goToTeacherActivity();
+        }
+
     }
 }

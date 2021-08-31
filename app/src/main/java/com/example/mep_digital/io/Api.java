@@ -3,6 +3,7 @@ package com.example.mep_digital.io;
 
 import com.example.mep_digital.model.CreateStudent;
 import com.example.mep_digital.model.CreateTeacher;
+import com.example.mep_digital.model.ListCourses;
 import com.example.mep_digital.model.ListStudents;
 import com.example.mep_digital.model.ListTeachers;
 import com.example.mep_digital.model.LoginPost;
@@ -45,6 +46,10 @@ public interface Api {
 
     @DELETE("teachers/{id}")
     Call<Message> deleteTeacher(@Path("id") String id);
+
+    @GET("courses")
+    Call<ListCourses> getCourses();
+    
 
     @POST("auth/login")
     Call<LoginReturn> postLogin(@Body LoginPost loginPost);

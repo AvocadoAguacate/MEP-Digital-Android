@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.mep_digital.Admin.Detail.ClassDetailActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.Admin.Detail.StudentDetailActivity;
 import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;
@@ -47,6 +48,11 @@ public class AdminActivity extends AppCompatActivity {
 
     public void goStudentDetail(View view){
         Intent intent = new Intent(binding.getRoot().getContext(), StudentDetailActivity.class);
+        startActivity(intent);
+    }
+
+    public void goClassDetail(View view){
+        Intent intent = new Intent(binding.getRoot().getContext(), ClassDetailActivity.class);
         startActivity(intent);
     }
 
