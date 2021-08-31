@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.mep_digital.Admin.AdminActivity;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.LoginPost;
 import com.example.mep_digital.model.LoginReturn;
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
      * Crea el intent para cambiar al activity para Admin
      */
     private void goToAdminActivity(){
-        Intent intent = new Intent(this,AdminActivity.class);
+        Intent intent = new Intent(this, AdminActivity.class);
         startActivity(intent);
     }
 

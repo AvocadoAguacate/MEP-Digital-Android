@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.mep_digital.ui.home.HomeFragment"
+        android:name="com.example.mep_digital.Admin.ui.home.AdminClassFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_admin_class" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.mep_digital.ui.admin_teacher.AdminTeacherFragment"
+        android:name="com.example.mep_digital.Admin.ui.admin_teacher.AdminTeacherFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_admin_teacher" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.mep_digital.ui.notifications.StudentFragment"
+        android:name="com.example.mep_digital.Admin.ui.notifications.StudentFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_admin_student" />
 </navigation>

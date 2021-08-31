@@ -1,4 +1,4 @@
-package com.example.mep_digital;
+package com.example.mep_digital.Admin;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.mep_digital.model.Student;
+import com.example.mep_digital.R;
+import com.example.mep_digital.Admin.Detail.StudentDetailActivity;
+import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 

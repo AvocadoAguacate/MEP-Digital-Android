@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeacherDetailActivity">
+    tools:context=".Admin.Detail.TeacherDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MEPDigital">
-        <activity android:name=".StudentDetailActivity"></activity>
-        <activity android:name=".TeacherDetailActivity" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".Admin.Detail.ClassDetailActivity"
+            android:exported="true" />
+        <activity android:name=".Admin.Detail.StudentDetailActivity" />
+        <activity android:name=".Admin.Detail.TeacherDetailActivity" />
+        <activity
+            android:name=".Admin.AdminActivity"
             android:label="@string/title_activity_admin" />
         <activity android:name=".LoginActivity">
             <intent-filter>

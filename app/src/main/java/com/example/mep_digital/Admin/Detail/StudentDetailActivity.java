@@ -1,4 +1,4 @@
-package com.example.mep_digital;
+package com.example.mep_digital.Admin.Detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mep_digital.R;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.CreateStudent;
 import com.example.mep_digital.model.Message;
