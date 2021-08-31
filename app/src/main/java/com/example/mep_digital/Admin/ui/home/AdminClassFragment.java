@@ -12,11 +12,11 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.mep_digital.Admin.Detail.ClassDetailActivity;
 import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;
 import com.example.mep_digital.databinding.FragmentAdminClassBinding;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.ListCourses;
-import com.example.mep_digital.model.ListTeachers;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class AdminClassFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(binding.getRoot().getContext(), TeacherDetailActivity.class);
+                Intent intent = new Intent(binding.getRoot().getContext(), ClassDetailActivity.class);
                 intent.putExtra("class", listCourses.getCourses().get(i));
                 startActivity(intent);
             }
@@ -60,26 +60,26 @@ public class AdminClassFragment extends Fragment {
     }
 
     private void getClasses(){
-//        Call<ListCourses> call = RetrofitClient.getInstance().getMyApi();
-//        call.enqueue(new Callback<ListCourses>() {
-//            @Override
-//            public void onResponse(Call<ListCourses> call, Response<ListCourses> response) {
-//                int statusCode = response.code();
-//                ListCourses listResult = response.body();
-//                listCourses = listResult;
-//                ArrayList<String> courses = new ArrayList<String>();
-//                for (int i = 0; i < listResult.getCourses().size(); i++) {
-//                    courses.add(listResult.getCourses().get(i).getName() + "\nId: " +
-//                            listResult.getCourses().get(i).getId());
-//                }
-//                listView.setAdapter(new ArrayAdapter<String>(binding.getRoot().getContext(),
-//                        android.R.layout.simple_list_item_1, courses));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ListCourses> call, Throwable t) {
-//                // Log error here since request failed
-//            }
-//        });
+        Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getCourses();
+        call.enqueue(new Callback<ListCourses>() {
+            @Override
+            public void onResponse(Call<ListCourses> call, Response<ListCourses> response) {
+                int statusCode = response.code();
+                ListCourses listResult = response.body();
+                listCourses = listResult;
+                ArrayList<String> courses = new ArrayList<String>();
+                for (int i = 0; i < listResult.getCourses().size(); i++) {
+                    courses.add(listResult.getCourses().get(i).getName() + "\nId: " +
+                            listResult.getCourses().get(i).getId());
+                }
+                listView.setAdapter(new ArrayAdapter<String>(binding.getRoot().getContext(),
+                        android.R.layout.simple_list_item_1, courses));
+            }
+
+            @Override
+            public void onFailure(Call<ListCourses> call, Throwable t) {
+                // Log error here since request failed
+            }
+        });
     }
 }
