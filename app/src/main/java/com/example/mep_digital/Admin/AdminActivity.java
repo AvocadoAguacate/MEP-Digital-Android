@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.mep_digital.Admin.Detail.ClassDetailActivity;
+import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.Admin.Detail.StudentDetailActivity;
 import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;

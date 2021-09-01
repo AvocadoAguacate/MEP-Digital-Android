@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MEPDigital">
         <activity
-            android:name=".Admin.Detail.ClassDetailActivity"
+            android:name=".Admin.Detail.Course.CourseStudentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Detail.Course.CourseTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Detail.Course.ClassDetailActivity"
             android:exported="true" />
         <activity android:name=".Admin.Detail.StudentDetailActivity" />
         <activity android:name=".Admin.Detail.TeacherDetailActivity" />
