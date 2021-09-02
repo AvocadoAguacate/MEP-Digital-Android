@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             userType = LoginType.admin.toString();
         } else if(spinner.getSelectedItem().toString().contains("Est")){
             userType = LoginType.student.toString();
-        } else if(spinner.getSelectedItem().toString().contains("Est")){
+        } else if(spinner.getSelectedItem().toString().contains("Est")){     //"Tea"
             userType = LoginType.teacher.toString();
         }
         LoginPost loginPost = new LoginPost(editTextUser.getText().toString(),

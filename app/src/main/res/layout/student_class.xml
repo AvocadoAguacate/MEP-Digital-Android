@@ -5,49 +5,59 @@
     android:orientation="vertical"
     >
 
+
     <TextView
-        android:id="@+id/TextViewMepDigital"
+        android:id="@+id/classNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:ems="10"
+        android:text="Materia"/>
+
+    <TextView
+        android:id="@+id/newsTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:text="Mep-Digital"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:ems="10"
         android:text="Noticias" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="195dp" />
+
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/homeworkTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:ems="10"
         android:text="Tareas" />
 
-    <TextView
-        android:id="@+id/textView6"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="128dp" />
+
+    <TextView
+        android:id="@+id/teacherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:ems="10"
         android:text="Profesor" />
 
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="66dp" />
+
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/readyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Listo" />
