@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
     Button selectFinishTimeButton;
     EditText idCourseAdminEditText;
     EditText nameCourseAdminEditText;
+    Spinner courseSelectGradeSpinner;
 
     boolean[] checkedDays;
     String[] daysWeek;
@@ -45,6 +47,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
         adminClassStudentsButton = findViewById(R.id.adminClassStudentButton);
         idCourseAdminEditText = findViewById(R.id.idCourseAdminEditText);
         nameCourseAdminEditText = findViewById(R.id.nameCourseAdminEditText);
+        courseSelectGradeSpinner = findViewById(R.id.courseSelectGradeSpinner);
         //
         daysWeek = getResources().getStringArray(R.array.week_days);
         checkedDays = new boolean[daysWeek.length];
