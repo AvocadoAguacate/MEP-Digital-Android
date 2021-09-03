@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.mep_digital.R;
+import com.example.mep_digital.model.Course;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
     EditText idCourseAdminEditText;
     EditText nameCourseAdminEditText;
     Spinner courseSelectGradeSpinner;
+    Course course;
 
     boolean[] checkedDays;
     String[] daysWeek;
@@ -61,7 +62,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if(isChecked){
-                            if(!selectedDays.contains(which)){
+                            if(!selectedDays.contains(daysWeek[which])){
                                 selectedDays.add(daysWeek[which]);
                             }
                         } else if(selectedDays.contains(daysWeek[which])){
@@ -73,19 +74,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                 mBuilder.setPositiveButton(R.string.accept_alert_dialog, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String item = "";
-                        for (int i = 0; i < selectedDays.size(); i++){
-                            item += selectedDays.get(i);
-                            if (i != selectedDays.size()-1){
-                                item += " , ";
-                            }
-                        }
-                        if(selectedDays.size()>0){
-                            selecDaysButton.setText(item);
-                        } else {
-                            selecDaysButton.setText(R.string.select_days);
-                        }
-
+                        updateSelectDaysButtonTitle();
                     }
                 });
                 mBuilder.setNegativeButton(R.string.cancel_alert_dialog, new DialogInterface.OnClickListener() {
@@ -110,8 +99,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 startHour = hourOfDay;
                                 startMinute = minute;
-                                selectStartTimeButton.setText("Hora de inicio: " + startHour + ":"
-                                + startMinute);
+                                updateStartTimeButton();
                             }
                         },12,0,true);
                 timePickerDialog.updateTime(startHour,startMinute);
@@ -128,8 +116,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 finishHour = hourOfDay;
                                 finishMinute = minute;
-                                selectFinishTimeButton.setText("Hora de inicio: " + finishHour + ":"
-                                        + finishMinute);
+                                updateFinishTimeButton();
                             }
                         },12,0,true);
                 timePickerDialog.updateTime(finishHour,finishMinute);
@@ -146,6 +133,12 @@ public class ClassDetailActivity extends AppCompatActivity  {
                     Intent intent = new Intent(ClassDetailActivity.this,CourseTeacherActivity.class);
                     intent.putExtra("idCourse",idCourse);
                     intent.putExtra("nameCourse",nameCourse);
+                    if(course.getTeacher() == null){
+                        intent.putExtra("newTeacher",true);
+                    } else {
+                        intent.putExtra("teacher",course.getTeacher());
+                        intent.putExtra("newTeacher",false);
+                    }
                     startActivity(intent);
                 }
             }
@@ -165,5 +158,60 @@ public class ClassDetailActivity extends AppCompatActivity  {
             }
         });
 
+        //
+        loadData();
+
+    }
+    private void loadData(){
+        Intent intent = getIntent();
+        boolean newCourse = intent.getBooleanExtra("newCourse",true);
+        if(!newCourse){
+            course = (Course)intent.getSerializableExtra("course");
+            nameCourseAdminEditText.setText(course.getName());
+            idCourseAdminEditText.setText(course.getId());
+            getScheduleCourseToPrint();
+        }
+    }
+
+    private void getScheduleCourseToPrint(){
+        for(int i = 0; i < course.getSchedule().size(); i++){
+            if(!selectedDays.contains(daysWeek[course.getSchedule().get(i).getDay()])){
+                selectedDays.add(daysWeek[course.getSchedule().get(i).getDay()]);
+            }
+            if(i == 0){
+                finishHour = course.getSchedule().get(i).getEndHour();
+                finishMinute = course.getSchedule().get(i).getEndMinutes();
+                startHour = course.getSchedule().get(i).getStartHour();
+                startMinute = course.getSchedule().get(i).getStartMinutes();
+            }
+        }
+        updateSelectDaysButtonTitle();
+        updateFinishTimeButton();
+        updateStartTimeButton();
+    }
+
+    private void updateSelectDaysButtonTitle(){
+        String item = "";
+        for (int i = 0; i < selectedDays.size(); i++){
+            item += selectedDays.get(i);
+            if (i != selectedDays.size()-1){
+                item += " , ";
+            }
+        }
+        if(selectedDays.size()>0){
+            selecDaysButton.setText(item);
+        } else {
+            selecDaysButton.setText(R.string.select_days);
+        }
+    }
+
+    private void updateFinishTimeButton(){
+        String title = "Hora de inicio: " + finishHour + ":" + finishMinute;
+        selectFinishTimeButton.setText(title);
+    }
+
+    private void updateStartTimeButton(){
+        String title = "Hora de inicio: " + startHour + ":" + startMinute;
+        selectStartTimeButton.setText(title);
     }
 }

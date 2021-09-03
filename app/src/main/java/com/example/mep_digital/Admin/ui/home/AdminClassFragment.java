@@ -44,7 +44,8 @@ public class AdminClassFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(binding.getRoot().getContext(), ClassDetailActivity.class);
-                intent.putExtra("class", listCourses.getCourses().get(i));
+                intent.putExtra("course", listCourses.getCourses().get(i));
+                intent.putExtra("newCourse",false);//bit de modo, true = quiere hacer un nuevo curso y no hay que cargar la información de un curso
                 startActivity(intent);
             }
         });

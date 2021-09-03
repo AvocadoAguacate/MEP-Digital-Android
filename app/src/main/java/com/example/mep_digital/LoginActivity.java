@@ -69,6 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToAdminActivityFast(View view){
+        Intent intent = new Intent(this, AdminActivity.class);
+        startActivity(intent);
+    }
+
     private boolean checkLogin(){
         if(editTextUser.getText().toString().isEmpty() ||
         editTextPassword.getText().toString().isEmpty()){
