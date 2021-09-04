@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 import com.example.mep_digital.R;
 import com.example.mep_digital.model.Course;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ClassDetailActivity extends AppCompatActivity  {
@@ -153,6 +154,12 @@ public class ClassDetailActivity extends AppCompatActivity  {
                     Intent intent = new Intent(ClassDetailActivity.this,CourseStudentActivity.class);
                     intent.putExtra("idCourse",idCourse);
                     intent.putExtra("nameCourse",nameCourse);
+                    if(course.getStudents().size() == 0){
+                        intent.putExtra("emptyList",true);
+                    } else {
+                        intent.putExtra("listStudents", (Serializable) course.getStudents());
+                        intent.putExtra("emptyList",false);
+                    }
                     startActivity(intent);
                 }
             }

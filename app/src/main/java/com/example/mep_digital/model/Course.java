@@ -165,4 +165,10 @@ public class Course implements Serializable {
         this.teacher = teacher;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

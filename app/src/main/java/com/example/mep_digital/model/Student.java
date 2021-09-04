@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class    Student implements Serializable {
 
     @SerializedName("_id")
     private String _id;
@@ -102,4 +102,17 @@ public class Student implements Serializable {
         this.v = v;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "_id='" + _id + '\'' +
+                ", id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", grade=" + grade +
+                ", v=" + v +
+                '}';
+    }
 }

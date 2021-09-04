@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class CreateStudentCourse {
+public class AddStudentCourse {
 
     @SerializedName("studentId")
     @Expose
@@ -14,14 +14,14 @@ public class CreateStudentCourse {
      * No args constructor for use in serialization
      *
      */
-    public CreateStudentCourse() {
+    public AddStudentCourse() {
     }
 
     /**
      *
      * @param studentId
      */
-    public CreateStudentCourse(String studentId) {
+    public AddStudentCourse(String studentId) {
         super();
         this.studentId = studentId;
     }
