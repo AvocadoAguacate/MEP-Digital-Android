@@ -4,17 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mep_digital.R;
+import com.example.mep_digital.io.RetrofitClient;
+import com.example.mep_digital.model.GetTeacher;
+import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Teacher;
+import com.example.mep_digital.model.UpdateTeacherCourse;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CourseTeacherActivity extends AppCompatActivity {
 
@@ -42,6 +52,98 @@ public class CourseTeacherActivity extends AppCompatActivity {
         deleteCourseTeacherButton = findViewById(R.id.deleteCourseTeacherButton);
         cancelCourseTeacherButton = findViewById(R.id.cancelCourseTeacherButton);
         dataCourseTeacherListView = findViewById(R.id.dataCourseTeacherListView);
+        //Botones
+        cancelCourseTeacherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        deleteCourseTeacherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String teacherId = courseTeacherIdEditText.getText().toString();
+                if(!teacherId.isEmpty()){
+                    String idCourse = idCourseTeacherTextView.getText().toString();
+                    UpdateTeacherCourse updateTeacherCourse = new UpdateTeacherCourse(teacherId);
+                    Call<Message> call = RetrofitClient.getInstance().getMyApi().deleteTeacherCourse(idCourse,updateTeacherCourse);
+                    call.enqueue(new Callback<Message>() {
+                        @Override
+                        public void onResponse(Call<Message> call, Response<Message> response) {
+                            try {
+                                int statusCode = response.code();
+                                Message message = response.body();
+                                Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
+                                dataCourseTeacherListView.setAdapter(null);
+                            } catch (Exception e){
+                                Toast.makeText(getApplicationContext(),"Error al eliminar profesor", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Message> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+        searchCourseTeacherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String teacherId = courseTeacherIdEditText.getText().toString();
+                if(!teacherId.isEmpty()){
+                    Call<GetTeacher> call = RetrofitClient.getInstance().getMyApi().getTeacher(teacherId);
+                    call.enqueue(new Callback<GetTeacher>() {
+                        @Override
+                        public void onResponse(Call<GetTeacher> call, Response<GetTeacher> response) {
+                            try {
+                                int statusCode = response.code();
+                                GetTeacher getTeacher = response.body();
+                                teacher = getTeacher.getTeacher();
+                                updateTeacherDataListView();
+                            } catch (Exception e){
+                                Toast.makeText(getApplicationContext(),"Error al buscar profesor", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetTeacher> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+        addCourseTeacherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String teacherId = courseTeacherIdEditText.getText().toString();
+                if(!teacherId.isEmpty()){
+                    String idCourse = idCourseTeacherTextView.getText().toString();
+                    UpdateTeacherCourse updateTeacherCourse = new UpdateTeacherCourse(teacherId);
+                    Call<Message> call = RetrofitClient.getInstance().getMyApi().putTeacherCourse(idCourse,updateTeacherCourse);
+                    call.enqueue(new Callback<Message>() {
+                        @Override
+                        public void onResponse(Call<Message> call, Response<Message> response) {
+                            try {
+                                int statusCode = response.code();
+                                Message message = response.body();
+                                Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
+                                dataCourseTeacherListView.setAdapter(null);
+                            } catch (Exception e){
+                                Toast.makeText(getApplicationContext(),"Error al agregar profesor", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Message> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
         //
         loadData();
     }

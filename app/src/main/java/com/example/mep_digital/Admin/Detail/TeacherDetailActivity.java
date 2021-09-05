@@ -30,6 +30,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private EditText lastName2TeacherEditText;
     private EditText emailTeacherEditText;
     private TextView teacherDetailTextView;
+
     private boolean updateMode;
 
     @Override
