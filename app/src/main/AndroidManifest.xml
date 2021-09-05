@@ -12,6 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MEPDigital">
         <activity
+            android:name=".Teacher.ChatTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Teacher.StudentsListTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Teacher.AssigmentTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Teacher.NewTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Teacher.CourseTeacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Teacher.ListCourseTeacherActivity"
+            android:exported="true" />
+        <activity
             android:name=".Admin.Detail.Course.CourseStudentActivity"
             android:exported="true" />
         <activity
