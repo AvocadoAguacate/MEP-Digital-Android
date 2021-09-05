@@ -19,7 +19,11 @@ import com.example.mep_digital.model.GetTeacher;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Teacher;
 import com.example.mep_digital.model.UpdateTeacherCourse;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -76,7 +80,16 @@ public class CourseTeacherActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                 dataCourseTeacherListView.setAdapter(null);
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al eliminar profesor", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 
@@ -103,7 +116,16 @@ public class CourseTeacherActivity extends AppCompatActivity {
                                 teacher = getTeacher.getTeacher();
                                 updateTeacherDataListView();
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al buscar profesor", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 
@@ -132,7 +154,16 @@ public class CourseTeacherActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                 dataCourseTeacherListView.setAdapter(null);
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al agregar profesor", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 

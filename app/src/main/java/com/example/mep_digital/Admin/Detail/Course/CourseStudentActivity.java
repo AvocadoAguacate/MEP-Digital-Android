@@ -19,7 +19,11 @@ import com.example.mep_digital.model.GetCourse;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Student;
 import com.example.mep_digital.model.StudentReturn;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +75,16 @@ public class CourseStudentActivity extends AppCompatActivity {
                                 StudentReturn studentReturn = response.body();
                                 updateDataStudentListView(studentReturn.getStudent());
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al buscar estudiante", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseStudentActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 
@@ -100,7 +113,16 @@ public class CourseStudentActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                 getListStudentList();
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al agregar estudiante", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseStudentActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 
@@ -129,7 +151,16 @@ public class CourseStudentActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                 getListStudentList();
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al eliminar estudiante", Toast.LENGTH_LONG).show();
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(CourseStudentActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
 
@@ -199,7 +230,16 @@ public class CourseStudentActivity extends AppCompatActivity {
                     listStudent = getCourse.getCourse().getStudents();
                     updateListStudentListView();
                 } catch (Exception e){
-                    Toast.makeText(getApplicationContext(),"Error al actualizar la lista de estudiantes", Toast.LENGTH_LONG).show();
+                    JsonParser parser = new JsonParser();
+                    JsonElement mJson = null;
+                    try {
+                        mJson = parser.parse(response.errorBody().string());
+                        Gson gson = new Gson();
+                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                        Toast.makeText(CourseStudentActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
 

@@ -23,19 +23,26 @@ import com.example.mep_digital.model.CreateSchedule;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Schedule;
 import com.example.mep_digital.model.UpdateCourse;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ClassDetailActivity extends AppCompatActivity  {
 
@@ -108,8 +115,16 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                 finish();
                             } catch (Exception e){
-                                Toast.makeText(getApplicationContext(),"Error al eliminar curso", Toast.LENGTH_LONG).show();
-                                cancelClassButton.setText("Error:"+ response.errorBody().toString());
+                                JsonParser parser = new JsonParser();
+                                JsonElement mJson = null;
+                                try {
+                                    mJson = parser.parse(response.errorBody().string());
+                                    Gson gson = new Gson();
+                                    Message errorResponse = gson.fromJson(mJson, Message.class);
+                                    Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
                         @Override
@@ -127,7 +142,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                 String idCourse = idCourseAdminEditText.getText().toString();
                 String nameCourse = nameCourseAdminEditText.getText().toString();
                 if(!idCourse.isEmpty() && !nameCourse.isEmpty()){
-                    int grade = courseSelectGradeSpinner.getSelectedItemPosition();
+                    int grade = courseSelectGradeSpinner.getSelectedItemPosition() + 1;
                     if(newCourse){
                         CreateCourse createCourse = new CreateCourse(idCourse,nameCourse,grade);
                         Call<Message> call = RetrofitClient.getInstance().getMyApi().postCourse(createCourse);
@@ -138,9 +153,20 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                     int statusCode = response.code();
                                     Message message = response.body();
                                     Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
+                                    newCourse = false;
                                     saveSchedule();
                                 } catch (Exception e){
-                                    cancelClassButton.setText("Error:"+ response.errorBody().toString());
+                                    JsonParser parser = new JsonParser();
+                                    JsonElement mJson = null;
+                                    try {
+                                        mJson = parser.parse(response.errorBody().string());
+                                        Gson gson = new Gson();
+                                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                                        Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+
                                 }
                             }
 
@@ -161,7 +187,16 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                     Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                                     saveSchedule();
                                 } catch (Exception e){
-                                    Toast.makeText(getApplicationContext(),"Error al actualizar curso", Toast.LENGTH_LONG).show();
+                                    JsonParser parser = new JsonParser();
+                                    JsonElement mJson = null;
+                                    try {
+                                        mJson = parser.parse(response.errorBody().string());
+                                        Gson gson = new Gson();
+                                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                                        Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             }
 
@@ -296,7 +331,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
         if(selectedDays.size() > 0){
             if(startHour > 0 && finishHour > 0){
                 if(((startHour*100)+startMinute) < ((finishHour*100)+finishMinute)){
-                    //deleteSchedule(); ToDo
+                    deleteSchedule();
                     for(int i = 0; i < selectedDays.size(); i++){
                         int day = getIntDay(selectedDays.get(i));
                         CreateSchedule createSchedule = new CreateSchedule(day,startHour,startMinute,finishHour,finishMinute);
@@ -311,7 +346,17 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                     Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
 
                                 } catch (Exception e){
-                                    Toast.makeText(getApplicationContext(),"Error al guardar horario", Toast.LENGTH_LONG).show();
+                                    JsonParser parser = new JsonParser();
+                                    JsonElement mJson = null;
+                                    try {
+                                        mJson = parser.parse(response.errorBody().string());
+                                        Gson gson = new Gson();
+                                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                                        cancelClassButton.setText(errorResponse.getMessage());
+                                        Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             }
                             @Override
@@ -345,7 +390,16 @@ public class ClassDetailActivity extends AppCompatActivity  {
                             System.out.println(message.getMessage());
 
                         } catch (Exception e){
-                            Toast.makeText(getApplicationContext(),"Error al guardar horario,eliminando", Toast.LENGTH_LONG).show();
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson = null;
+                            try {
+                                mJson = parser.parse(response.errorBody().string());
+                                Gson gson = new Gson();
+                                Message errorResponse = gson.fromJson(mJson, Message.class);
+                                Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
 
@@ -362,7 +416,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
     private int getIntDay(String day) {
         for(int i = 0; i < daysWeek.length ; i++){
             if(daysWeek[i].contains(day)){
-                return i;
+                return i + 1;//0 es un día inválido
             }
         }
         return 0;
@@ -375,7 +429,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
             course = (Course)intent.getSerializableExtra("course");
             nameCourseAdminEditText.setText(course.getName());
             idCourseAdminEditText.setText(course.getId());
-            courseSelectGradeSpinner.setSelection(course.getGrade());
+            courseSelectGradeSpinner.setSelection(course.getGrade()-1);
             listSchedule = course.getSchedule();
             getScheduleCourseToPrint();
         }
@@ -384,7 +438,8 @@ public class ClassDetailActivity extends AppCompatActivity  {
     private void getScheduleCourseToPrint(){
         for(int i = 0; i < course.getSchedule().size(); i++){
             if(!selectedDays.contains(daysWeek[course.getSchedule().get(i).getDay()])){
-                selectedDays.add(daysWeek[course.getSchedule().get(i).getDay()]);
+                selectedDays.add(daysWeek[course.getSchedule().get(i).getDay()-1]);
+                checkedDays[course.getSchedule().get(i).getDay()-1] = true;
             }
             if(i == 0){
                 finishHour = course.getSchedule().get(i).getEndHour();
