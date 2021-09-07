@@ -33,6 +33,8 @@
         <entry key="app/src/main/res/layout/activity_class_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_course_student.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/activity_course_teacher.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/activity_course_teacher2.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/activity_list_course_teacher.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3351449275362319" />
         <entry key="app/src/main/res/layout/activity_new_teacher.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_student_detail.xml" value="0.34148550724637683" />

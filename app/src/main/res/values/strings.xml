@@ -50,6 +50,21 @@
     <string name="list">Lista</string>
     <string name="loading">Cargando</string>
     <string name="sercha">Buscar</string>
+    <string name="list_courses">Lista de cursos</string>
+    <string name="news">Noticias</string>
+    <string name="homeworks">Tareas</string>
+    <string name="chat">Chat del curso</string>
+    <string name="student_list_teacher">Lista de estudiantes</string>
+    <string name="back">Atrás</string>
+    <string name="add_homework">Crear tarea</string>
+    <string name="add_New">Crear noticia</string>
+    <string name="ready">Listo</string>
+    <string name="new_homework">Craer nueva tarea</string>
+    <string name="title">Título</string>
+    <string name="add_new">Craer nueva noticia</string>
+    <string name="write_new">Escribir noticia</string>
+    <string name="select_date">Selecciona fecha de entrega</string>
+    <string name="write_homework">Escribir tarea</string>
     <string-array name="grade_array">
         <item>Primero</item>
         <item>Segundo</item>

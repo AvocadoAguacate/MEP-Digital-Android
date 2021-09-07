@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mep_digital.Admin.AdminActivity;
+import com.example.mep_digital.Teacher.ListCourseTeacherActivity;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.LoginPost;
 import com.example.mep_digital.model.LoginReturn;
@@ -66,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void goToAdminActivity(){
         Intent intent = new Intent(this, AdminActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToAdminActivity(String idTeacher){
+        Intent intent = new Intent(this, ListCourseTeacherActivity.class);
+        intent.putExtra("idTeacher",idTeacher);
         startActivity(intent);
     }
 
