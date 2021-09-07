@@ -8,8 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/teacherDetailTextView"
@@ -17,19 +19,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:textSize="24sp"
             android:text="@string/teacher"
-             />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/idTeacherEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textAlignment="center"
             android:hint="@string/id_number"
             android:inputType="number"
-             />
+            android:textAlignment="center" />
 
         <EditText
             android:id="@+id/nameTeacherEditText"
@@ -68,7 +68,7 @@
             android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/qualificationTeacherTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/qualification"
@@ -89,8 +89,18 @@
             android:textSize="18sp" />
 
         <ListView
+            android:id="@+id/courseTeacherListView"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/cancelTeacherButton"

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,8 @@ public class StudentDetailActivity extends AppCompatActivity {
     private EditText emailStudentEditText;
     private Spinner studentSelectGradeSpinner;
     private TextView studentDetailTextView;
+    private TextView studentListCoursesTextView;
+    private ListView coursesStudentListView;
     private boolean updateMode;
 
     private Button deleteButton;
@@ -59,7 +62,8 @@ public class StudentDetailActivity extends AppCompatActivity {
         studentSelectGradeSpinner = findViewById(R.id.studentSelectGradeSpinner);
         deleteButton = findViewById(R.id.deleteStudentButton);
         studentDetailTextView = findViewById(R.id.studentDetailTextView);
-
+        studentListCoursesTextView = findViewById(R.id.studentListCoursesTextView);
+        coursesStudentListView = findViewById(R.id.coursesStudentListView);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 deleteData(v);
@@ -211,6 +215,7 @@ public class StudentDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Student student = (Student)intent.getSerializableExtra("student");
             idStudentEditText.setText(student.getId());
+            idStudentEditText.setEnabled(false);
             nameStudentEditText.setText(student.getName());
             lastName1EditText.setText(student.getLastname().split(" ")[0]);
             lastName2EditText.setText(student.getLastname().split(" ")[1]);
@@ -219,6 +224,9 @@ public class StudentDetailActivity extends AppCompatActivity {
             updateMode = true;
         } catch (Exception e){
             studentDetailTextView.setText("Nuevo estudiante");
+            deleteButton.setEnabled(false);
+            coursesStudentListView.setVisibility(View.INVISIBLE);
+            studentListCoursesTextView.setVisibility(View.INVISIBLE);
         }
 
 
