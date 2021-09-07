@@ -12,12 +12,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.CreateStudent;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Student;
 import com.example.mep_digital.model.UpdateStudent;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,15 +88,29 @@ public class StudentDetailActivity extends AppCompatActivity {
                 UpdateStudent updateStudent = new UpdateStudent(emailStudentEditText.getText().toString(),
                         idStudentEditText.getText().toString(),nameStudentEditText.getText().toString(),
                         lastName1EditText.getText().toString() + " " + lastName2EditText.getText().toString(),
-                        studentSelectGradeSpinner.getSelectedItemPosition());
+                        studentSelectGradeSpinner.getSelectedItemPosition() + 1);
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().putStudent(idStudentEditText.getText().toString(),updateStudent);
                 call.enqueue(new Callback<Message>() {
                     @Override
                     public void onResponse(Call<Message> call, Response<Message> response) {
-                        int statusCode = response.code();
-                        Message message = response.body();
-                        Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
-                        finish();
+                        try {
+                            int statusCode = response.code();
+                            Message message = response.body();
+                            Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (Exception e ){
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson = null;
+                            try {
+                                mJson = parser.parse(response.errorBody().string());
+                                Gson gson = new Gson();
+                                Message errorResponse = gson.fromJson(mJson, Message.class);
+                                Toast.makeText(StudentDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        } finally {
+                            finish();
+                        }
                     }
 
                     @Override
@@ -99,11 +119,12 @@ public class StudentDetailActivity extends AppCompatActivity {
                     }
                 });
 
-            } else {
+            } else { //New student
                 CreateStudent createStudent = new CreateStudent(idStudentEditText.getText().toString(),
                         emailStudentEditText.getText().toString(),idStudentEditText.getText().toString(),
                         nameStudentEditText.getText().toString(),lastName1EditText.getText().toString() +
-                        " " + lastName2EditText.getText().toString(),studentSelectGradeSpinner.getSelectedItemPosition());
+                        " " + lastName2EditText.getText().toString(),
+                        studentSelectGradeSpinner.getSelectedItemPosition() + 1);
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().postStudent(createStudent);
                 call.enqueue(new Callback<Message>() {
                     @Override
@@ -113,7 +134,16 @@ public class StudentDetailActivity extends AppCompatActivity {
                             Message message = response.body();
                             Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                         } catch (Exception e){
-                            Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson = null;
+                            try {
+                                mJson = parser.parse(response.errorBody().string());
+                                Gson gson = new Gson();
+                                Message errorResponse = gson.fromJson(mJson, Message.class);
+                                Toast.makeText(StudentDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                         } finally {
                             finish();
                         }
@@ -153,7 +183,16 @@ public class StudentDetailActivity extends AppCompatActivity {
                         Message message = response.body();
                         Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                     } catch (Exception e){
-                        Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
+                        JsonParser parser = new JsonParser();
+                        JsonElement mJson = null;
+                        try {
+                            mJson = parser.parse(response.errorBody().string());
+                            Gson gson = new Gson();
+                            Message errorResponse = gson.fromJson(mJson, Message.class);
+                            Toast.makeText(StudentDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     } finally {
                         finish();
                     }
@@ -176,7 +215,7 @@ public class StudentDetailActivity extends AppCompatActivity {
             lastName1EditText.setText(student.getLastname().split(" ")[0]);
             lastName2EditText.setText(student.getLastname().split(" ")[1]);
             emailStudentEditText.setText(student.getEmail());
-            studentSelectGradeSpinner.setSelection(student.getGrade());
+            studentSelectGradeSpinner.setSelection(student.getGrade() - 1);
             updateMode = true;
         } catch (Exception e){
             studentDetailTextView.setText("Nuevo estudiante");
