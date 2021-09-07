@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,10 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private EditText lastName2TeacherEditText;
     private EditText emailTeacherEditText;
     private TextView teacherDetailTextView;
+    private Button deleteTeacherButton;
+    private TextView qualificationTeacherTextView;
+    private TextView studentListCoursesTextView;
+    private ListView courseTeacherListView;
 
     private boolean updateMode;
 
@@ -46,8 +53,11 @@ public class TeacherDetailActivity extends AppCompatActivity {
         lastName2TeacherEditText = findViewById(R.id.lastName2TeacherEditText);
         emailTeacherEditText = findViewById(R.id.emailTeacherEditText);
         teacherDetailTextView = findViewById(R.id.teacherDetailTextView);
-
-        //Cargando estudiante
+        deleteTeacherButton = findViewById(R.id.deleteTeacherButton);
+        qualificationTeacherTextView = findViewById(R.id.qualificationTeacherTextView);
+        studentListCoursesTextView = findViewById(R.id.studentListCoursesTextView);
+        courseTeacherListView = findViewById(R.id.courseTeacherListView);
+        //Cargando profesor
         tryLoadData();
 
     }
@@ -152,6 +162,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Teacher teacher = (Teacher) intent.getSerializableExtra("teacher");
             idTeacherEditText.setText(teacher.getId());
+            idTeacherEditText.setEnabled(false);
             nameTeacherEditText.setText(teacher.getName());
             lastName1TeacherEditText.setText(teacher.getLastname().split(" ")[0]);
             lastName2TeacherEditText.setText(teacher.getLastname().split(" ")[1]);
@@ -159,6 +170,10 @@ public class TeacherDetailActivity extends AppCompatActivity {
             updateMode = true;
         } catch (Exception e){
             teacherDetailTextView.setText("Nuevo profesor");
+            deleteTeacherButton.setEnabled(false);
+            qualificationTeacherTextView.setVisibility(View.INVISIBLE);
+            studentListCoursesTextView.setVisibility(View.INVISIBLE);
+            courseTeacherListView.setVisibility(View.INVISIBLE);
         }
 
 
