@@ -30,16 +30,13 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/homeworkTextEditText"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
             android:ems="10"
-            android:gravity="top|left"
+            android:gravity="start|top"
             android:hint="@string/write_new"
-            android:inputType="textPersonName"
-            android:lines="10"
-            android:maxLines="15"
-            android:minLines="5" />
+            android:inputType="textMultiLine" />
 
     </LinearLayout>
 
