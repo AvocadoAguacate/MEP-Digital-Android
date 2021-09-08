@@ -198,6 +198,7 @@ public class NewTeacherActivity extends AppCompatActivity {
                     GetCourse getCourse = response.body();
                     Intent intent = new Intent(NewTeacherActivity.this,CourseTeacherActivity.class);
                     intent.putExtra("course",getCourse.getCourse());
+                    intent.putExtra("needApiUpdate",false);
                     startActivity(intent);
                 } catch (Exception e){
                     JsonParser parser = new JsonParser();

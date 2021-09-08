@@ -36,6 +36,7 @@ public class ChatTeacherActivity extends AppCompatActivity {
 
     ListView chatTeacherListView;
     Button sendTeacherButton;
+    Button backChatTeacherButton;
     EditText textTeacherEditText;
     Course course;
 
@@ -47,6 +48,7 @@ public class ChatTeacherActivity extends AppCompatActivity {
         textTeacherEditText = findViewById(R.id.textTeacherEditText);
         sendTeacherButton = findViewById(R.id.sendTeacherButton);
         chatTeacherListView = findViewById(R.id.chatTeacherListView);
+        backChatTeacherButton = findViewById(R.id.backChatTeacherButton);
         //
         loadChat();
         setButtons();
@@ -90,6 +92,43 @@ public class ChatTeacherActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+        backChatTeacherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<GetCourse> call = RetrofitClient.getInstance().getMyApi().getCourse(course.getId());
+                call.enqueue(new Callback<GetCourse>() {
+                    @Override
+                    public void onResponse(Call<GetCourse> call, Response<GetCourse> response) {
+                        try {
+                            int statusCode = response.code();
+                            GetCourse getCourse = response.body();
+                            Intent intent = new Intent(ChatTeacherActivity.this,CourseTeacherActivity.class);
+                            intent.putExtra("course",getCourse.getCourse());
+                            intent.putExtra("needApiUpdate",false);
+                            startActivity(intent);
+                        } catch (Exception e){
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson = null;
+                            try {
+                                mJson = parser.parse(response.errorBody().string());
+                                Gson gson = new Gson();
+                                Message errorResponse = gson.fromJson(mJson, Message.class);
+                                Toast.makeText(ChatTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            } finally {
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetCourse> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

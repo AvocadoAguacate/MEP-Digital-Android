@@ -16,6 +16,7 @@ import com.example.mep_digital.R;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.Assignment;
 import com.example.mep_digital.model.Course;
+import com.example.mep_digital.model.GetCourse;
 import com.example.mep_digital.model.ListCourses;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.News;
@@ -66,6 +67,7 @@ public class CourseTeacherActivity extends AppCompatActivity {
         //
         setListViewOnClick();
     }
+
 
     private void setListViewOnClick() {
         newsCourseTeacherListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,34 +122,9 @@ public class CourseTeacherActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getTeacherCourses(idTeacher);
-                call.enqueue(new Callback<ListCourses>() {
-                    @Override
-                    public void onResponse(Call<ListCourses> call, Response<ListCourses> response) {
-                        try {
-                            int statusCode = response.code();
-                            ListCourses listCourses = response.body();
-                            Intent intent = new Intent(CourseTeacherActivity.this,ListCourseTeacherActivity.class);
-                            intent.putExtra("courses",listCourses);
-                            startActivity(intent);
-                        } catch (Exception e){
-                            JsonParser parser = new JsonParser();
-                            JsonElement mJson = null;
-                            try {
-                                mJson = parser.parse(response.errorBody().string());
-                                Gson gson = new Gson();
-                                Message errorResponse = gson.fromJson(mJson, Message.class);
-                                Toast.makeText(CourseTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ListCourses> call, Throwable t) {
-
-                    }
-                });
+                Intent intent = new Intent(CourseTeacherActivity.this,ListCourseTeacherActivity.class);
+                intent.putExtra("idTeacher",course.getTeacher().getId());
+                startActivity(intent);
             }
         });
         studentsListButton.setOnClickListener(new View.OnClickListener() {
@@ -162,8 +139,47 @@ public class CourseTeacherActivity extends AppCompatActivity {
 
     private void getDataCourse(){
         Intent intent = getIntent();
-        course = (Course)intent.getSerializableExtra("course");
-        idTeacher = intent.getStringExtra("idTeacher");
+        boolean needApiUpdate = intent.getBooleanExtra("needApiUpdate",true);
+        String idCourse = intent.getStringExtra("idCourse");
+        if(needApiUpdate){
+            Call<GetCourse> call = RetrofitClient.getInstance().getMyApi().getCourse(idCourse);
+            call.enqueue(new Callback<GetCourse>() {
+                @Override
+                public void onResponse(Call<GetCourse> call, Response<GetCourse> response) {
+                    try {
+                        int statusCode = response.code();
+                        GetCourse getCourse = response.body();
+                        course = getCourse.getCourse();
+                        loadDataCourse();
+                    } catch (Exception e){
+                        JsonParser parser = new JsonParser();
+                        JsonElement mJson = null;
+                        try {
+                            mJson = parser.parse(response.errorBody().string());
+                            Gson gson = new Gson();
+                            Message errorResponse = gson.fromJson(mJson, Message.class);
+                            Toast.makeText(CourseTeacherActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        } finally {
+                            finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<GetCourse> call, Throwable t) {
+
+                }
+            });
+        } else {
+            course = (Course)intent.getSerializableExtra("course");
+            idTeacher = intent.getStringExtra("idTeacher");
+            loadDataCourse();
+        }
+
+    }
+    private void loadDataCourse(){
         nameCourseTextView.setText(course.getName());
         listNews = course.getNews();
         updateNewsLisView();
@@ -176,7 +192,7 @@ public class CourseTeacherActivity extends AppCompatActivity {
         for (int i = 0; i < listAssigments.size(); i++) {
             listStringsAssgimnents.add(listAssigments.get(i).getTitle() +
                     "\n" + listAssigments.get(i).getDescription() +
-                    "\nFecha de entrega:" + listAssigments.get(i).getSubmitDate());
+                    "\nFecha de entrega: " + listAssigments.get(i).getSubmitDate());
         }
         homeworksCourseTeacherListView.setAdapter(new ArrayAdapter<String>(CourseTeacherActivity.this,
                 android.R.layout.simple_list_item_1, listStringsAssgimnents));
@@ -187,7 +203,7 @@ public class CourseTeacherActivity extends AppCompatActivity {
         for (int i = 0; i < listNews.size(); i++) {
             listStringsNews.add(listNews.get(i).getTitle() +
                     "\n" + listNews.get(i).getMessage()+
-                    "\nFecha de publicación:" + listNews.get(i).getDate());
+                    "\nFecha de publicación: " + listNews.get(i).getDate());
         }
         newsCourseTeacherListView.setAdapter(new ArrayAdapter<String>(CourseTeacherActivity.this,
                 android.R.layout.simple_list_item_1, listStringsNews));

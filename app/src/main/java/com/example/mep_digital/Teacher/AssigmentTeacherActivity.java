@@ -244,6 +244,7 @@ public class AssigmentTeacherActivity extends AppCompatActivity {
                     GetCourse getCourse = response.body();
                     Intent intent = new Intent(AssigmentTeacherActivity.this,CourseTeacherActivity.class);
                     intent.putExtra("course",getCourse.getCourse());
+                    intent.putExtra("needApiUpdate",false);
                     startActivity(intent);
                 } catch (Exception e){
                     JsonParser parser = new JsonParser();

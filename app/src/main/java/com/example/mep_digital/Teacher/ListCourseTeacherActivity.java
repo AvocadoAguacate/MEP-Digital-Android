@@ -53,8 +53,9 @@ public class ListCourseTeacherActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListCourseTeacherActivity.this,CourseTeacherActivity.class);
-                intent.putExtra("course", listCourses.getCourses().get(position));
                 intent.putExtra("idTeacher",idTeacher);
+                intent.putExtra("idCourse",listCourses.getCourses().get(position).getId());
+                intent.putExtra("needApiUpdate",true);
                 startActivity(intent);
             }
         });

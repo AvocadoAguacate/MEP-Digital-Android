@@ -29,24 +29,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/textTeacherEditText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/textTeacherEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/sendTeacherButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:icon="@drawable/send"
+                app:iconSize="30dp" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/sendTeacherButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/backChatTeacherButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            app:icon="@drawable/send"
-            app:iconSize="30dp" />
+            android:text="@string/ready" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
