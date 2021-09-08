@@ -6,16 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mep_digital.Admin.AdminActivity;
+import com.example.mep_digital.Admin.Detail.StudentDetailActivity;
 import com.example.mep_digital.Teacher.ListCourseTeacherActivity;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.LoginPost;
 import com.example.mep_digital.model.LoginReturn;
 import com.example.mep_digital.model.LoginType;
+import com.example.mep_digital.model.Message;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,15 +78,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void goToAdminActivity(String idTeacher){
+    private void goToTeacherActivity(String idTeacher){
         Intent intent = new Intent(this, ListCourseTeacherActivity.class);
         intent.putExtra("idTeacher",idTeacher);
         startActivity(intent);
     }
 
     public void goToAdminActivityFast(View view){
-        Intent intent = new Intent(this, AdminActivity.class);
-        startActivity(intent);
+        goToTeacherActivity("12");
     }
 
     private boolean checkLogin(){
@@ -95,11 +102,12 @@ public class LoginActivity extends AppCompatActivity {
             userType = LoginType.admin.toString();
         } else if(spinner.getSelectedItem().toString().contains("Est")){
             userType = LoginType.student.toString();
-        } else if(spinner.getSelectedItem().toString().contains("Est")){
+        } else if(spinner.getSelectedItem().toString().contains("Pro")){
             userType = LoginType.teacher.toString();
         }
         LoginPost loginPost = new LoginPost(editTextUser.getText().toString(),
                 editTextPassword.getText().toString(),userType);
+        //button.setText(loginPost.toString());
         Call<LoginReturn> call = RetrofitClient.getInstance().getMyApi().postLogin(loginPost);
         call.enqueue(new Callback<LoginReturn>() {
             @Override
@@ -107,12 +115,20 @@ public class LoginActivity extends AppCompatActivity {
                 int statusCode = response.code();
                 LoginReturn loginReturn = response.body();
                 try {
-                    System.out.println(loginReturn.toString());
                     Toast.makeText(getApplicationContext(), loginReturn.getEmail(),Toast.LENGTH_LONG).show();
                     router();
 
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Inicio fallido",Toast.LENGTH_LONG).show();
+                    JsonParser parser = new JsonParser();
+                    JsonElement mJson = null;
+                    try {
+                        mJson = parser.parse(response.errorBody().string());
+                        Gson gson = new Gson();
+                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                        Toast.makeText(LoginActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
             }
@@ -127,10 +143,13 @@ public class LoginActivity extends AppCompatActivity {
     private void router(){
         if(spinner.getSelectedItem().toString().contains("Adm")){
             goToAdminActivity();
-        } else if (spinner.getSelectedItem().toString().contains("Est")) {
+        } else {
+            String userId = editTextUser.getText().toString();
+            if (spinner.getSelectedItem().toString().contains("Est")) {
             //goToStudentActivity();
-        } else if (spinner.getSelectedItem().toString().contains("Pro")) {
-            //goToTeacherActivity();
+            } else if (spinner.getSelectedItem().toString().contains("Pro")) {
+                goToTeacherActivity(userId);
+            }
         }
 
     }

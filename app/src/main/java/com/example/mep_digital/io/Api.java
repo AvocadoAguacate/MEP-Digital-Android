@@ -28,6 +28,7 @@ import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Api {
 
@@ -98,6 +99,9 @@ public interface Api {
 
     @POST("auth/login")
     Call<LoginReturn> postLogin(@Body LoginPost loginPost);
+
+    @GET("courses")
+    Call<ListCourses> getTeacherCourses(@Query("teacherId") String teacherId);
 
 
 
