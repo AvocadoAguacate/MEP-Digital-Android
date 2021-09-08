@@ -1,12 +1,13 @@
 package com.example.mep_digital.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class ListCourses {
+public class ListCourses implements Serializable {
 
     @SerializedName("courses")
     @Expose

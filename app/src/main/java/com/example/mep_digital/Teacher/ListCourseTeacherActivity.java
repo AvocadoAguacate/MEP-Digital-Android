@@ -54,6 +54,7 @@ public class ListCourseTeacherActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ListCourseTeacherActivity.this,CourseTeacherActivity.class);
                 intent.putExtra("course", listCourses.getCourses().get(position));
+                intent.putExtra("idTeacher",idTeacher);
                 startActivity(intent);
             }
         });
