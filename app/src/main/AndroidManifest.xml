@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MEPDigital">
         <activity
+            android:name=".Student.Student_teacherActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Student.List_classActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Student.Student_classActivity"
+            android:exported="true" />
+        <activity
             android:name=".Admin.Detail.ClassDetailActivity"
             android:exported="true" />
         <activity android:name=".Admin.Detail.StudentDetailActivity" />

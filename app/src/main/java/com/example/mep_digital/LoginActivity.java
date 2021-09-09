@@ -11,6 +11,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mep_digital.Admin.AdminActivity;
+
+
+import com.example.mep_digital.Student.List_classActivity;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.LoginPost;
 import com.example.mep_digital.model.LoginReturn;
@@ -19,6 +22,9 @@ import com.example.mep_digital.model.LoginType;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,7 +58,8 @@ public class LoginActivity extends AppCompatActivity {
      * @param view
      */
     public void login(View view){
-        //Aqui decido que tipo de usuario es
+
+
         if(checkLogin()){
             postLogin();
         } else {
@@ -69,6 +76,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
+    private void goToStudentActivity(){
+        Intent intent = new Intent(this, List_classActivity.class);
+        startActivity(intent);
+
+    }
+
     private boolean checkLogin(){
         if(editTextUser.getText().toString().isEmpty() ||
         editTextPassword.getText().toString().isEmpty()){
@@ -83,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             userType = LoginType.admin.toString();
         } else if(spinner.getSelectedItem().toString().contains("Est")){
             userType = LoginType.student.toString();
-        } else if(spinner.getSelectedItem().toString().contains("Est")){     //"Tea"
+        } else if(spinner.getSelectedItem().toString().contains("Est")){     //"Pro"
             userType = LoginType.teacher.toString();
         }
         LoginPost loginPost = new LoginPost(editTextUser.getText().toString(),
@@ -116,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         if(spinner.getSelectedItem().toString().contains("Adm")){
             goToAdminActivity();
         } else if (spinner.getSelectedItem().toString().contains("Est")) {
-            //goToStudentActivity();
+            goToStudentActivity();
         } else if (spinner.getSelectedItem().toString().contains("Pro")) {
             //goToTeacherActivity();
         }
