@@ -9,14 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mep_digital.R;
 import com.example.mep_digital.Teacher.CourseTeacherActivity;
 import com.example.mep_digital.io.RetrofitClient;
+import com.example.mep_digital.model.Assignment;
 import com.example.mep_digital.model.Course;
 import com.example.mep_digital.model.GetCourse;
 import com.example.mep_digital.model.Message;
+import com.example.mep_digital.model.News;
+import com.example.mep_digital.model.Teacher;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -48,6 +52,10 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
     private String courseId;
     private Course course;
 
+    private String text;
+
+    private TextView nameTextView;
+
 
 
     @Override
@@ -62,6 +70,7 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
         TeachersListView= findViewById(R.id.teacherListView);   // define el Listview
         TeachersListView.setOnItemClickListener(this);
         chatStudentButton= findViewById(R.id.chatStudentButton);
+        nameTextView= findViewById(R.id.classNameTextView);
         ///////////////////////////////////
         chatStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +95,12 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
 
     private void updateAll() {
         //Ya la info debe estar en course
+        addCourseName();
         addNews();
         addHomeworks();
         addTeachers();
     }
+
 
     private void getData() {
         Intent intent = getIntent();
@@ -135,27 +146,41 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
     }
 
     private void addNews(){
-        String text ="Examen Final";
-        //cuando se obtengan los datos de la base se agregan a la lista y al adapter
-        NewsList.add(text);
-        NewsAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,NewsList);
-        NewsListView.setAdapter(NewsAdapter);
+        List<News>ListNews;
+        ListNews=course.getNews();
+        for(int i=0;i<ListNews.size();i++){
+            text=ListNews.get(i).getTitle();
+            NewsList.add(text);
+            NewsAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,NewsList);
+            NewsListView.setAdapter(NewsAdapter);
+        }
     }
 
     private void addHomeworks(){
-        String text ="Tr01";
-
-        HomeworkList.add(text);
-        HomeworkAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,HomeworkList);
-        HomeworkListView.setAdapter(HomeworkAdapter);
+        List<Assignment>ListAssignment;
+        ListAssignment=course.getAssignments();
+        for(int i=0;i<ListAssignment.size();i++){
+            text=ListAssignment.get(i).getTitle();
+            HomeworkList.add(text);
+            HomeworkAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,HomeworkList);
+            HomeworkListView.setAdapter(HomeworkAdapter);
+        }
     }
 
     private void addTeachers(){
-        String text ="Juan Fuentes";
+        Teacher teacher;
+        teacher=course.getTeacher();
+        text=teacher.getName();
         TeachersList.add(text);
         TeachersAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,TeachersList);
         TeachersListView.setAdapter(TeachersAdapter);
     }
+
+    private void addCourseName(){
+        text=course.getName();
+        nameTextView.setText(text);
+    }
+
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

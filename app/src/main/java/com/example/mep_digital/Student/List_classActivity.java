@@ -37,6 +37,7 @@ public class List_classActivity extends AppCompatActivity{
     private ArrayAdapter<String> mAdapter;
     private String studentId;
     private List<Course> listCourses;
+    private String text;
 
 
     @Override
@@ -46,7 +47,7 @@ public class List_classActivity extends AppCompatActivity{
         ////////////////////////////
         mListView= findViewById(R.id.coursesListView);
         ////////////////////////////
-        getCoures();
+        getCourses();
         ////////////////////////////
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,7 +66,7 @@ public class List_classActivity extends AppCompatActivity{
 
     }
 
-    private void getCoures() {
+    private void getCourses() {
         Intent intent = getIntent();
         studentId = intent.getStringExtra("studentId");
         Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getStudentCourses(studentId);
@@ -102,11 +103,13 @@ public class List_classActivity extends AppCompatActivity{
 //        Cargue los cursos al listview desde listCourses
 //        listCourses.get(0).getName();
 //        listCourses.get(0).getId();
-        String texto ="Matematicas";
-        //cuando se obtengan los datos de la base se agregan a la lista y al adapter
-        mList.add(texto);
-        mAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,mList);
-        mListView.setAdapter(mAdapter);
+
+        for(int i=0; i<listCourses.size();i++){
+            text =listCourses.get(i).getName() + "\n" + listCourses.get(i).getId();
+            mList.add(text);
+            mAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,mList);
+            mListView.setAdapter(mAdapter);
+        }
 
     }
 
