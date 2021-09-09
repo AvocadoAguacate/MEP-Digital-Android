@@ -98,8 +98,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToAdminActivityFast(View view){
+    public void goToTeacherActivityFast(View view){
         goToTeacherActivity("12");
+    }
+
+    public void goToStudentActivityFast(View view){
+        goToStudentActivity("4");
+    }
+
+    public void goToAdminActivityFast(View view){
+        goToAdminActivity();
     }
 
     private boolean checkLogin(){
