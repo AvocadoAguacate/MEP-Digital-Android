@@ -107,6 +107,9 @@ public interface Api {
     @GET("courses")
     Call<ListCourses> getTeacherCourses(@Query("teacherId") String teacherId);
 
+    @GET("courses")
+    Call<ListCourses> getStudentCourses(@Query("studentId") String teacherId);
+
     @POST("courses/{id}/chat")
     Call<Message> postChat(@Path("id") String id, @Body PostChat postChat);
 

@@ -85,8 +85,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private void goToStudentActivity(){
+    private void goToStudentActivity(String userId){
         Intent intent = new Intent(this, List_classActivity.class);
+        intent.putExtra("studentId",userId);
         startActivity(intent);
 
     }
@@ -159,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             String userId = editTextUser.getText().toString();
             if (spinner.getSelectedItem().toString().contains("Est")) {
-            goToStudentActivity();
+            goToStudentActivity(userId);
             } else if (spinner.getSelectedItem().toString().contains("Pro")) {
                 goToTeacherActivity(userId);
             }
