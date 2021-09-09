@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.mep_digital.Admin.Detail.ClassDetailActivity;
+import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.Admin.Detail.StudentDetailActivity;
 import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;
@@ -53,6 +53,7 @@ public class AdminActivity extends AppCompatActivity {
 
     public void goClassDetail(View view){
         Intent intent = new Intent(binding.getRoot().getContext(), ClassDetailActivity.class);
+        intent.putExtra("newCourse",true);//bit de modo, true = quiere hacer un nuevo curso y no hay que cargar la información de un curso
         startActivity(intent);
     }
 

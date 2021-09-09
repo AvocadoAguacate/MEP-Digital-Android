@@ -30,6 +30,27 @@
     <string name="student">Estudiante</string>
     <string name="new_teacher_button">Nuevo profesor</string>
     <string name="select_calification">Escoja la calificacion del profesor</string>
+    <string name="new_course_title">Nuevo curso</string>
+    <string name="id_course">Id del curso</string>
+    <string name="name_course">Nombre del curso</string>
+    <string name="schedule">Horario</string>
+    <string name="select_days">Selecciona los días</string>
+    <string name="cancel_alert_dialog">Cancelar</string>
+    <string name="accept_alert_dialog">Acetar</string>
+    <string name="select_days_alert_dialog">Selecciona los dias</string>
+    <string name="select_start_time">Selecciona hora de inicio</string>
+    <string name="select_finish_time_button">Selecciona hora de fin</string>
+    <string name="admin_class_teacher_button">Administrar maestro</string>
+    <string name="admin_class_students_button">Administrar estudiantes</string>
+    <string name="save_class_button">Guardar</string>
+    <string name="delete_class_button">Eliminar</string>
+    <string name="select_start_time_dialog">Seleccciona la hora de inicio</string>
+    <string name="add_student_to_course">Agregar</string>
+    <string name="course_student_id_search">Cédula</string>
+    <string name="data">Datos</string>
+    <string name="list">Lista</string>
+    <string name="loading">Cargando</string>
+    <string name="sercha">Buscar</string>
     <string-array name="grade_array">
         <item>Primero</item>
         <item>Segundo</item>
@@ -38,7 +59,13 @@
         <item>Quinto</item>
         <item>Sexto</item>
     </string-array>
-
-
-
+    <string-array name="week_days">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+        <item>Domingo</item>
+    </string-array>
 </resources>

@@ -2,10 +2,8 @@ package com.example.mep_digital.model;
 
 import java.io.Serializable;
 import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 
 public class Course implements Serializable {
 
@@ -32,7 +30,7 @@ public class Course implements Serializable {
     private List<Schedule> schedule = null;
     @SerializedName("assignments")
     @Expose
-    private List<Object> assignments = null;
+    private List<Assignment> assignments = null;
     @SerializedName("chat")
     @Expose
     private List<Chat> chat = null;
@@ -64,7 +62,7 @@ public class Course implements Serializable {
      * @param id
      * @param _id
      */
-    public Course(String _id, List<Student> students, String id, String name, Integer grade, List<News> news, List<Schedule> schedule, List<Object> assignments, List<Chat> chat, Integer v, Teacher teacher) {
+    public Course(String _id, List<Student> students, String id, String name, Integer grade, List<News> news, List<Schedule> schedule, List<Assignment> assignments, List<Chat> chat, Integer v, Teacher teacher) {
         super();
         this._id = _id;
         this.students = students;
@@ -135,11 +133,11 @@ public class Course implements Serializable {
         this.schedule = schedule;
     }
 
-    public List<Object> getAssignments() {
+    public List<Assignment> getAssignments() {
         return assignments;
     }
 
-    public void setAssignments(List<Object> assignments) {
+    public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
     }
 
@@ -167,4 +165,10 @@ public class Course implements Serializable {
         this.teacher = teacher;
     }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

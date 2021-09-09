@@ -1,21 +1,30 @@
 package com.example.mep_digital.io;
 
 
+import com.example.mep_digital.model.CreateCourse;
+import com.example.mep_digital.model.CreateSchedule;
 import com.example.mep_digital.model.CreateStudent;
+import com.example.mep_digital.model.AddStudentCourse;
 import com.example.mep_digital.model.CreateTeacher;
+import com.example.mep_digital.model.GetCourse;
+import com.example.mep_digital.model.GetTeacher;
 import com.example.mep_digital.model.ListCourses;
 import com.example.mep_digital.model.ListStudents;
 import com.example.mep_digital.model.ListTeachers;
 import com.example.mep_digital.model.LoginPost;
 import com.example.mep_digital.model.LoginReturn;
 import com.example.mep_digital.model.Message;
+import com.example.mep_digital.model.StudentReturn;
+import com.example.mep_digital.model.UpdateCourse;
 import com.example.mep_digital.model.UpdateStudent;
 import com.example.mep_digital.model.UpdateTeacher;
+import com.example.mep_digital.model.UpdateTeacherCourse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -23,8 +32,12 @@ import retrofit2.http.Path;
 public interface Api {
 
     String BASE_URL = "https://serene-sands-78874.herokuapp.com/api/";
+
     @GET("students")
     Call<ListStudents> getStudents();
+
+    @GET("students/{id}")
+    Call<StudentReturn> getStudent(@Path("id") String id);
 
     @POST("students")
     Call<Message> postStudent(@Body CreateStudent createStudent);
@@ -38,6 +51,9 @@ public interface Api {
     @GET("teachers")
     Call<ListTeachers> getTeachers();
 
+    @GET("teachers/{id}")
+    Call<GetTeacher> getTeacher(@Path("id") String id);
+
     @POST("teachers")
     Call<Message> postTeacher(@Body CreateTeacher createTeacher);
 
@@ -49,7 +65,36 @@ public interface Api {
 
     @GET("courses")
     Call<ListCourses> getCourses();
-    
+
+    @GET("courses/{id}")
+    Call<GetCourse> getCourse(@Path("id") String id);
+
+    @POST("courses")
+    Call<Message> postCourse(@Body CreateCourse createCourse);
+
+    @DELETE("courses/{id}")
+    Call<Message> deleteCourse(@Path("id") String id);
+
+    @PUT("courses/{id}")
+    Call<Message> putCourse(@Path("id") String id, @Body UpdateCourse updateCourse);
+
+    @POST("courses/{id}/schedule")
+    Call<Message> postSchedule(@Path("id") String id, @Body CreateSchedule createSchedule);
+
+    @DELETE("courses/{idCourse}/schedule/{idSchedule}")
+    Call<Message> deleteSchedule(@Path("idCourse") String idCourse, @Path("idSchedule") String idSchedule);
+
+    @PUT("courses/{id}/teacher")
+    Call<Message> putTeacherCourse(@Path("id") String id, @Body UpdateTeacherCourse updateTeacherCourse);
+
+    @HTTP(method = "DELETE", path = "courses/{id}/teacher", hasBody = true)
+    Call<Message> deleteTeacherCourse(@Path("id") String id, @Body UpdateTeacherCourse updateTeacherCourse);
+
+    @POST("courses/{id}/students")
+    Call<Message> postStudentCourse(@Path("id") String id, @Body AddStudentCourse addStudentCourse);
+
+    @DELETE("courses/{idCourse}/students/{idStudent}")
+    Call<Message> deleteStudentCourse(@Path("idCourse") String idCourse, @Path("idStudent") String idStudent);
 
     @POST("auth/login")
     Call<LoginReturn> postLogin(@Body LoginPost loginPost);

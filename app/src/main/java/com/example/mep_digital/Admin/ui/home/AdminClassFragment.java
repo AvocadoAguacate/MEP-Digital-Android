@@ -12,8 +12,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.mep_digital.Admin.Detail.ClassDetailActivity;
-import com.example.mep_digital.Admin.Detail.TeacherDetailActivity;
+import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.databinding.FragmentAdminClassBinding;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.ListCourses;
@@ -45,7 +44,8 @@ public class AdminClassFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(binding.getRoot().getContext(), ClassDetailActivity.class);
-                intent.putExtra("class", listCourses.getCourses().get(i));
+                intent.putExtra("course", listCourses.getCourses().get(i));
+                intent.putExtra("newCourse",false);//bit de modo, true = quiere hacer un nuevo curso y no hay que cargar la información de un curso
                 startActivity(intent);
             }
         });
