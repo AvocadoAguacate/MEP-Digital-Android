@@ -96,13 +96,13 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cancelStudentButton"
+            android:id="@+id/newNewButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="goBack"
             android:text="@string/cancel_button" />
         <Button
-            android:id="@+id/saveStudentButton"
+            android:id="@+id/newHomeworkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="saveData"

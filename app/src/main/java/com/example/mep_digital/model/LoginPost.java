@@ -46,4 +46,12 @@ public class LoginPost {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "LoginPost{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }
