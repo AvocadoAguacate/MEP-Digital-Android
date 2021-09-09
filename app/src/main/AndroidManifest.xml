@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MEPDigital">
         <activity
+            android:name=".Student.Student_ChatActivity"
+            android:exported="true" />
+        <activity
             android:name=".Student.Student_teacherActivity"
             android:exported="true" />
         <activity

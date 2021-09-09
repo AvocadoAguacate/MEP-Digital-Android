@@ -53,6 +53,8 @@ public class List_classActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(List_classActivity.this,Student_classActivity.class);
                 intent.putExtra("courseId",listCourses.get(position).getId());
+                intent.putExtra("studentId",studentId);
+                intent.putExtra("needApiUpdate",true);
                 startActivity(intent);
             }
         });          // permite hacer click en los elementos

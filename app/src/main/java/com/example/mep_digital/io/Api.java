@@ -18,6 +18,7 @@ import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.New;
 import com.example.mep_digital.model.News;
 import com.example.mep_digital.model.PostChat;
+import com.example.mep_digital.model.PutRating;
 import com.example.mep_digital.model.StudentReturn;
 import com.example.mep_digital.model.UpdateCourse;
 import com.example.mep_digital.model.UpdateStudent;
@@ -130,6 +131,9 @@ public interface Api {
 
     @DELETE("courses/{idCourse}/news/{idNew}")
     Call<Message> deleteNews(@Path("idCourse") String idCourse, @Path("idNew") String idNew);
+
+    @PUT("teachers/{id}/ratings")
+    Call<Message> putRating(@Path("id") String id, @Body PutRating putRating);
 
 
 }
