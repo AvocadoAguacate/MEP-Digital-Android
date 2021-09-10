@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mep_digital.R;
@@ -49,6 +50,11 @@ public class Student_teacherActivity extends AppCompatActivity {
     private Teacher teacher;
     private String studentId;
 
+    private TextView name;
+    private TextView phone;
+    private TextView email;
+    private String text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,6 +62,10 @@ public class Student_teacherActivity extends AppCompatActivity {
         setContentView(R.layout.student_teacher);
 
         getData();
+        name= findViewById(R.id.NameTextView);
+        phone=findViewById(R.id.phoneTextView);
+        email=findViewById(R.id.EmailtextView);
+        updateAll();
 
         backStudentButton = findViewById(R.id.backStudentButton);
         backStudentButton.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +128,16 @@ public class Student_teacherActivity extends AppCompatActivity {
         studentId = intent.getStringExtra("studentId");
         //Saque toda la info de teacher
     }
+
+    private void updateAll(){
+       text=teacher.getName();
+       name.setText(text);
+       text=teacher.getEmail();
+       email.setText(text);
+       text=teacher.getId();
+       phone.setText(text);
+    }
+
 
 
     private void ChangeView(View view){

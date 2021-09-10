@@ -149,7 +149,7 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
         List<News>ListNews;
         ListNews=course.getNews();
         for(int i=0;i<ListNews.size();i++){
-            text=ListNews.get(i).getTitle();
+            text=ListNews.get(i).getTitle() + "\n" + ListNews.get(i).getMessage()+ "\n" + ListNews.get(i).getDate();
             NewsList.add(text);
             NewsAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,NewsList);
             NewsListView.setAdapter(NewsAdapter);
@@ -160,7 +160,7 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
         List<Assignment>ListAssignment;
         ListAssignment=course.getAssignments();
         for(int i=0;i<ListAssignment.size();i++){
-            text=ListAssignment.get(i).getTitle();
+            text=ListAssignment.get(i).getTitle()+ "\n" + ListAssignment.get(i).getDescription()+ "\n" + ListAssignment.get(i).getSubmitDate();
             HomeworkList.add(text);
             HomeworkAdapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,HomeworkList);
             HomeworkListView.setAdapter(HomeworkAdapter);
