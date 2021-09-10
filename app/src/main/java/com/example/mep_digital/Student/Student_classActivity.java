@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -90,7 +92,43 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
                 startActivity(intent);
             }
         });
+        HomeworkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Assignment assignment = course.getAssignments().get(position);
+                String title = assignment.getTitle();
+                String description = assignment.getDescription();
+                //Hay que convertir el string a los datos especificos para
+                //reminder(year, month, day,hourIn24hFormat, minute, title, description);
+            }
+        });
 
+    }
+
+    private void reminder(int year, int month, int day, int hourIn24hFormat, int minute,
+                          String title, String description){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,day);
+        int hour = hourIn24hFormat;
+        if(hour > 12){
+            hour -=12;
+            calendar.set(Calendar.AM_PM,Calendar.PM);
+        }
+        calendar.set(Calendar.HOUR,hour);
+        calendar.set(Calendar.MINUTE,minute);
+
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setData(CalendarContract.Events.CONTENT_URI);
+        intent.putExtra(CalendarContract.Events.TITLE,title);
+        intent.putExtra(CalendarContract.Events.DESCRIPTION,description);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,calendar.getTime().getTime());
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        } else {
+            Toast.makeText(Student_classActivity.this,"valimos",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void updateAll() {
