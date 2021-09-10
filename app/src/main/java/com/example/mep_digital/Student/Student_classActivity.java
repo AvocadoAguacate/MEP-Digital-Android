@@ -27,8 +27,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -98,8 +102,18 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
                 Assignment assignment = course.getAssignments().get(position);
                 String title = assignment.getTitle();
                 String description = assignment.getDescription();
-                //Hay que convertir el string a los datos especificos para
-                //reminder(year, month, day,hourIn24hFormat, minute, title, description);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                try {
+                    Date date = format.parse(assignment.getSubmitDate());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    reminder(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),
+                            calendar.get(Calendar.MINUTE), title, description);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
