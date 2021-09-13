@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,12 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mep_digital.R;
+import com.example.mep_digital.Teacher.ListCourseTeacherActivity;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.CreateTeacher;
+import com.example.mep_digital.model.ListCourses;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Teacher;
 import com.example.mep_digital.model.UpdateTeacher;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,6 +45,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private TextView qualificationTeacherTextView;
     private TextView studentListCoursesTextView;
     private ListView courseTeacherListView;
+    private ListCourses listCourses;
 
     private boolean updateMode;
 
@@ -167,6 +176,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
             lastName1TeacherEditText.setText(teacher.getLastname().split(" ")[0]);
             lastName2TeacherEditText.setText(teacher.getLastname().split(" ")[1]);
             emailTeacherEditText.setText(teacher.getEmail());
+            getListViewStrings();
             updateMode = true;
         } catch (Exception e){
             teacherDetailTextView.setText("Nuevo profesor");
@@ -177,6 +187,46 @@ public class TeacherDetailActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void getListViewStrings(){
+        String idTeacher = idTeacherEditText.getText().toString();
+        Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getTeacherCourses(idTeacher);
+        call.enqueue(new Callback<ListCourses>() {
+            @Override
+            public void onResponse(Call<ListCourses> call, Response<ListCourses> response) {
+                try {
+                    int statusCode = response.code();
+                    listCourses = response.body();
+                    updateListView();
+                } catch (Exception e){
+                    JsonParser parser = new JsonParser();
+                    JsonElement mJson = null;
+                    try {
+                        mJson = parser.parse(response.errorBody().string());
+                        Gson gson = new Gson();
+                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                        Toast.makeText(TeacherDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ListCourses> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateListView(){
+        ArrayList<String> listViewStrings = new ArrayList<>();
+        for (int i = 0; i < listCourses.getCourses().size(); i++) {
+            listViewStrings.add(listCourses.getCourses().get(i).getName() +
+                    "\nId: " + listCourses.getCourses().get(i).getId());
+        }
+        courseTeacherListView.setAdapter(new ArrayAdapter<String>(TeacherDetailActivity.this,
+                android.R.layout.simple_list_item_1, listViewStrings));
     }
 
 

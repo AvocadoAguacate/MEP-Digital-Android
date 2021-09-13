@@ -100,9 +100,7 @@ public class List_classActivity extends AppCompatActivity{
     }
 
     private void addCourses(){
-//        Cargue los cursos al listview desde listCourses
-//        listCourses.get(0).getName();
-//        listCourses.get(0).getId();
+
 
         for(int i=0; i<listCourses.size();i++){
             text =listCourses.get(i).getName() + "\n" + listCourses.get(i).getId();

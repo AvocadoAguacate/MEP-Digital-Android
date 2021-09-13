@@ -29,7 +29,6 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -107,10 +106,17 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
                 try {
                     Date date = format.parse(assignment.getSubmitDate());
                     Calendar calendar = Calendar.getInstance();
+                    Calendar calendarNow = Calendar.getInstance();
                     calendar.setTime(date);
-                    reminder(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),
-                            calendar.get(Calendar.MINUTE), title, description);
+                    if(calendarNow.before(calendar)){
+                        reminder(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                                calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),
+                                calendar.get(Calendar.MINUTE), title, description);
+                    } else {
+                        Toast.makeText(Student_classActivity.this,
+                                "No puede agregar recordatorios de tareas en el pasado",
+                                Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

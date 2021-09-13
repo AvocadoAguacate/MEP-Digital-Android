@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.R;
+import com.example.mep_digital.Student.List_classActivity;
 import com.example.mep_digital.io.RetrofitClient;
+import com.example.mep_digital.model.Course;
 import com.example.mep_digital.model.CreateStudent;
+import com.example.mep_digital.model.ListCourses;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.Student;
 import com.example.mep_digital.model.UpdateStudent;
@@ -25,6 +28,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,8 +48,8 @@ public class StudentDetailActivity extends AppCompatActivity {
     private TextView studentListCoursesTextView;
     private ListView coursesStudentListView;
     private boolean updateMode;
-
     private Button deleteButton;
+    private List<Course> listCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +227,7 @@ public class StudentDetailActivity extends AppCompatActivity {
             emailStudentEditText.setText(student.getEmail());
             studentSelectGradeSpinner.setSelection(student.getGrade() - 1);
             updateMode = true;
+            getCourses();
         } catch (Exception e){
             studentDetailTextView.setText("Nuevo estudiante");
             deleteButton.setEnabled(false);
@@ -230,5 +236,45 @@ public class StudentDetailActivity extends AppCompatActivity {
         }
 
 
+    }
+    private void getCourses() {
+        String studentId = idStudentEditText.getText().toString();
+        Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getStudentCourses(studentId);
+        call.enqueue(new Callback<ListCourses>() {
+            @Override
+            public void onResponse(Call<ListCourses> call, Response<ListCourses> response) {
+                try {
+                    int statusCode = response.code();
+                    ListCourses getCourses = response.body();
+                    listCourses = getCourses.getCourses();
+                    addCourses();
+                } catch (Exception e){
+                    JsonParser parser = new JsonParser();
+                    JsonElement mJson = null;
+                    try {
+                        mJson = parser.parse(response.errorBody().string());
+                        Gson gson = new Gson();
+                        Message errorResponse = gson.fromJson(mJson, Message.class);
+                        Toast.makeText(StudentDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ListCourses> call, Throwable t) {
+
+            }
+        });
+    }
+    private void addCourses(){
+        String text = "";
+        ArrayList<String> mList = new ArrayList<>();
+        for(int i=0; i<listCourses.size();i++){
+            text =listCourses.get(i).getName() + "\n" + listCourses.get(i).getId();
+            mList.add(text);
+            ArrayAdapter mAdapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,mList);
+            coursesStudentListView.setAdapter(mAdapter);
+        }
     }
 }
