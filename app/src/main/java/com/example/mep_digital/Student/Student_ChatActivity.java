@@ -9,6 +9,7 @@ import com.example.mep_digital.model.Course;
 import com.example.mep_digital.model.GetCourse;
 import com.example.mep_digital.model.Message;
 import com.example.mep_digital.model.PostChat;
+import com.example.mep_digital.model.User;
 import com.example.mep_digital.model.UserChat;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -17,6 +18,7 @@ import com.google.gson.JsonParser;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,6 +136,12 @@ public class Student_ChatActivity extends AppCompatActivity {
                 });
             }
         });
+        chatStudentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateChatFromApi();
+            }
+        });
     }
 
     private void updateChatFromApi(){
@@ -177,11 +185,23 @@ public class Student_ChatActivity extends AppCompatActivity {
     private void updateChat(){
         ArrayList<String> chatStrings = new ArrayList<>();
         for (int i = 0; i < course.getChat().size(); i++) {
-            chatStrings.add("De:" + course.getChat().get(i).getUserType()+
-                    "\n" + course.getChat().get(i).getMessage());
+            chatStrings.add(getName(UserChat.valueOf(course.getChat().get(i).getUserType()),
+                    course.getChat().get(i).getUser()) + "\n"
+                    + course.getChat().get(i).getMessage());
         }
         chatStudentListView.setAdapter(new ArrayAdapter<String>(Student_ChatActivity.this,
                 android.R.layout.simple_list_item_1, chatStrings));
+    }
+
+    private String getName(UserChat type, User user){
+        String result = "";
+        if(type == UserChat.Teacher){
+            result += "Profesor: ";
+        } else {
+            result += "Estudiante: ";
+        }
+        result += user.getName() + " " + user.getLastName();
+        return result;
     }
 }
 
