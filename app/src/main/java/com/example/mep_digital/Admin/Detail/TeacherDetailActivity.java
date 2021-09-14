@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mep_digital.Admin.AdminActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.Teacher.ListCourseTeacherActivity;
 import com.example.mep_digital.io.RetrofitClient;
@@ -88,7 +89,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         } catch (Exception e){
                             Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
                         } finally {
-                            finish();
+                            goBackWithIntent();
                         }
                     }
 
@@ -114,7 +115,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         } catch (Exception e){
                             Toast.makeText(getApplicationContext(),e.toString(), Toast.LENGTH_LONG).show();
                         } finally {
-                            finish();
+                            goBackWithIntent();
                         }
                     }
 
@@ -154,7 +155,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                     } catch (Exception e){
                         Toast.makeText(getApplicationContext(),"No se pudo eliminar", Toast.LENGTH_LONG).show();
                     } finally {
-                        finish();
+                        goBackWithIntent();
                     }
                 }
 
@@ -232,6 +233,11 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
     public void goBack(View view){
         finish();
+    }
+
+    private void goBackWithIntent(){
+        Intent intent = new Intent(TeacherDetailActivity.this, AdminActivity.class);
+        startActivity(intent);
     }
 
 }

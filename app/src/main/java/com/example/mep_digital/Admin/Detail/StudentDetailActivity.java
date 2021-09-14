@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mep_digital.Admin.AdminActivity;
 import com.example.mep_digital.Admin.Detail.Course.ClassDetailActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.Student.List_classActivity;
@@ -118,7 +119,7 @@ public class StudentDetailActivity extends AppCompatActivity {
                                 ex.printStackTrace();
                             }
                         } finally {
-                            finish();
+                            goBackWithIntent();
                         }
                     }
 
@@ -154,7 +155,7 @@ public class StudentDetailActivity extends AppCompatActivity {
                                 ex.printStackTrace();
                             }
                         } finally {
-                            finish();
+                            goBackWithIntent();
                         }
                     }
 
@@ -203,7 +204,7 @@ public class StudentDetailActivity extends AppCompatActivity {
                             ex.printStackTrace();
                         }
                     } finally {
-                        finish();
+                        goBackWithIntent();
                     }
                 }
 
@@ -277,4 +278,10 @@ public class StudentDetailActivity extends AppCompatActivity {
             coursesStudentListView.setAdapter(mAdapter);
         }
     }
+
+    private void goBackWithIntent(){
+        Intent intent = new Intent(StudentDetailActivity.this, AdminActivity.class);
+        startActivity(intent);
+    }
+
 }

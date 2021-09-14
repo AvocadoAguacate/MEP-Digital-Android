@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.mep_digital.Admin.AdminActivity;
 import com.example.mep_digital.R;
 import com.example.mep_digital.io.RetrofitClient;
 import com.example.mep_digital.model.Course;
@@ -105,11 +106,16 @@ public class ClassDetailActivity extends AppCompatActivity  {
         courseSelectGradeSpinner.setSelection(0);
     }
 
+    private void goBackWithIntent(){
+        Intent intent = new Intent(ClassDetailActivity.this, AdminActivity.class);
+        startActivity(intent);
+    }
+
     private void setButtons() {
         cancelClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                goBackWithIntent();
             }
         });
         deleteClassButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +131,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                 int statusCode = response.code();
                                 Message message = response.body();
                                 Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
-                                finish();
+                                goBackWithIntent();
                             } catch (Exception e){
                                 JsonParser parser = new JsonParser();
                                 JsonElement mJson = null;
@@ -168,17 +174,6 @@ public class ClassDetailActivity extends AppCompatActivity  {
                                     newCourse = false;
                                     saveSchedule();
                                 } catch (Exception e){
-                                    JsonParser parser = new JsonParser();
-                                    JsonElement mJson = null;
-                                    try {
-                                        mJson = parser.parse(response.errorBody().string());
-                                        Gson gson = new Gson();
-                                        Message errorResponse = gson.fromJson(mJson, Message.class);
-                                        Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-
                                 }
                             }
 
@@ -374,7 +369,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
                         });
 
                     }
-                    finish();
+                    goBackWithIntent();
                 } else {
                     Toast.makeText(ClassDetailActivity.this,"Debería revisar las horas del horario",Toast.LENGTH_LONG).show();
                 }
@@ -387,41 +382,42 @@ public class ClassDetailActivity extends AppCompatActivity  {
     }
 
     private void deleteSchedule() {
-        if(listSchedule.size()>0){
-            String idCourse = idCourseAdminEditText.getText().toString();
-            Call<Message> call = RetrofitClient.getInstance().getMyApi().deleteSchedule(idCourse,course.getSchedule().get(0).get_id());
-            call.enqueue(new Callback<Message>() {
-                @Override
-                public void onResponse(Call<Message> call, Response<Message> response) {
-                    try {
-                        int statusCode = response.code();
-                        Message message = response.body();
-                        System.out.println(message.getMessage());
-                        course.getSchedule().remove(0);
-                        deleteSchedule();
-                    } catch (Exception e){
-                        JsonParser parser = new JsonParser();
-                        JsonElement mJson = null;
+        if(listSchedule != null){
+            if(listSchedule.size() > 0){
+                String idCourse = idCourseAdminEditText.getText().toString();
+                Call<Message> call = RetrofitClient.getInstance().getMyApi().deleteSchedule(idCourse,course.getSchedule().get(0).get_id());
+                call.enqueue(new Callback<Message>() {
+                    @Override
+                    public void onResponse(Call<Message> call, Response<Message> response) {
                         try {
-                            mJson = parser.parse(response.errorBody().string());
-                            Gson gson = new Gson();
-                            Message errorResponse = gson.fromJson(mJson, Message.class);
-                            Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                            int statusCode = response.code();
+                            Message message = response.body();
+                            System.out.println(message.getMessage());
+                            course.getSchedule().remove(0);
+                            deleteSchedule();
+                        } catch (Exception e){
+                            JsonParser parser = new JsonParser();
+                            JsonElement mJson = null;
+                            try {
+                                mJson = parser.parse(response.errorBody().string());
+                                Gson gson = new Gson();
+                                Message errorResponse = gson.fromJson(mJson, Message.class);
+                                Toast.makeText(ClassDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Message> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<Message> call, Throwable t) {
 
-                }
-            });
-        } else {
-            System.out.println("Salgo del ciclo");
+                    }
+                });
+            } else {
+                System.out.println("Salgo del ciclo");
+            }
         }
-
     }
 
     private void updateCourse(){
@@ -512,7 +508,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
     }
 
     private void updateFinishTimeButton(){
-        String title = "Hora de inicio: " + finishHour + ":" + finishMinute;
+        String title = "Hora final: " + finishHour + ":" + finishMinute;
         selectFinishTimeButton.setText(title);
     }
 
