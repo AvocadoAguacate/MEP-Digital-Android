@@ -150,8 +150,8 @@ public class AssigmentTeacherActivity extends AppCompatActivity {
                                                 targetMinute = minute;
                                                 submitDate += targetHour+":"+targetMinute+":00.722Z";
                                                 Toast.makeText(AssigmentTeacherActivity.this,submitDate,Toast.LENGTH_LONG).show();
-                                                selectTimeHomeworkButton.setText("Entrenga: "
-                                                        +dayOfMonth + "/"+ month+ "/"+year +
+                                                selectTimeHomeworkButton.setText("Entrega: "
+                                                        +dayOfMonth + "/"+ (month + 1)+ "/"+year +
                                                         " a las "+ targetHour + ":"+ targetMinute);
                                             }
                                         },12,0,true);

@@ -24,6 +24,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -41,6 +43,7 @@ public class CourseTeacherActivity extends AppCompatActivity {
     Button cancelCourseTeacherButton;
     ListView dataCourseTeacherListView;
     Teacher teacher;
+    static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,24 +195,31 @@ public class CourseTeacherActivity extends AppCompatActivity {
 
     private void updateTeacherDataListView(){
         ArrayList<String> teacherArray = new ArrayList<>();
-        float aproxRating = aproxRating();
         teacherArray.add(teacher.getName() + " " + teacher.getLastname() + "\n" +
                 teacher.getEmail() + "\n" +
-                "Calificación: "+ aproxRating + "\n");
+                aproxRating() + "\n");
         dataCourseTeacherListView.setAdapter(new ArrayAdapter<String>(CourseTeacherActivity.this,
                 android.R.layout.simple_list_item_1, teacherArray));
     }
 
 
-    private float aproxRating() {
-        int sum = 0;
-        if (teacher.getRatings().size() == 0){
-            return (float) sum;
+    private String aproxRating() {
+        if(teacher.getRatings() != null){
+            if(teacher.getRatings().size() > 0){
+                int sum = 0;
+                for (int i = 0; i < teacher.getRatings().size(); i++) {
+                    sum += teacher.getRatings().get(i).getRating();
+                }
+                double result = (double) sum / teacher.getRatings().size();
+                df2.setRoundingMode(RoundingMode.DOWN);
+                return "Calificación promedio: " + df2.format(result) + "/5";
+            }
         }
-        for(int i = 0; i < teacher.getRatings().size(); i++){
-            sum += (float)teacher.getRatings().get(i).getRating();
-        }
-        return (float) (sum/teacher.getRatings().size());
+        return "Sin calificaciones aún";
+    }
+
+    private void getPromTeacher(){
+
     }
 
 
