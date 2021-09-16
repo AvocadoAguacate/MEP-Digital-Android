@@ -130,11 +130,11 @@ public class Student_teacherActivity extends AppCompatActivity {
     }
 
     private void updateAll(){
-       text=teacher.getName();
+       text =teacher.getName();
        name.setText(text);
        text=teacher.getEmail();
        email.setText(text);
-       text=teacher.getId();
+       text="Id: "+teacher.getId();
        phone.setText(text);
     }
 

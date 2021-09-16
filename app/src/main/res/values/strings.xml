@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MEP-Digital</string>
     <string name="user">Usuario</string>
-    <string name="password">Contraseña</string>
     <string name="incorrect_user_password">Usuario o contraseña erroneos</string>
     <string name="login_button">Ingresar</string>
     <string name="title_activity_admin">Administrador</string>
@@ -65,6 +64,7 @@
     <string name="write_new">Escribir noticia</string>
     <string name="select_date">Selecciona fecha de entrega</string>
     <string name="write_homework">Escribir tarea</string>
+    <string name="password">Contraseña</string>
     <string-array name="grade_array">
         <item>Primero</item>
         <item>Segundo</item>

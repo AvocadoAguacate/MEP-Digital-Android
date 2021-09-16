@@ -139,7 +139,8 @@ public class AssigmentTeacherActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                submitDate = year+"-"+month+"-"+dayOfMonth+"T";
+                                int monthU = month + 1;
+                                submitDate = year+"-"+monthU +"-"+dayOfMonth+"T";
                                 TimePickerDialog timePickerDialog = new TimePickerDialog(
                                         AssigmentTeacherActivity.this,
                                         new TimePickerDialog.OnTimeSetListener() {

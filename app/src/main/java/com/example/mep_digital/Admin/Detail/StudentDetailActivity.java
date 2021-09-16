@@ -44,6 +44,7 @@ public class StudentDetailActivity extends AppCompatActivity {
     private EditText lastName1EditText;
     private EditText lastName2EditText;
     private EditText emailStudentEditText;
+    private EditText passwordStudent;
     private Spinner studentSelectGradeSpinner;
     private TextView studentDetailTextView;
     private TextView studentListCoursesTextView;
@@ -70,6 +71,7 @@ public class StudentDetailActivity extends AppCompatActivity {
         studentDetailTextView = findViewById(R.id.studentDetailTextView);
         studentListCoursesTextView = findViewById(R.id.studentListCoursesTextView);
         coursesStudentListView = findViewById(R.id.coursesStudentListView);
+        passwordStudent = findViewById(R.id.passwordStudent);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 deleteData(v);
@@ -96,7 +98,7 @@ public class StudentDetailActivity extends AppCompatActivity {
         if(checkData()){
             if(updateMode){
                 UpdateStudent updateStudent = new UpdateStudent(emailStudentEditText.getText().toString(),
-                        idStudentEditText.getText().toString(),nameStudentEditText.getText().toString(),
+                        passwordStudent.getText().toString(),nameStudentEditText.getText().toString(),
                         lastName1EditText.getText().toString() + " " + lastName2EditText.getText().toString(),
                         studentSelectGradeSpinner.getSelectedItemPosition() + 1);
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().putStudent(idStudentEditText.getText().toString(),updateStudent);
@@ -131,7 +133,7 @@ public class StudentDetailActivity extends AppCompatActivity {
 
             } else { //New student
                 CreateStudent createStudent = new CreateStudent(idStudentEditText.getText().toString(),
-                        emailStudentEditText.getText().toString(),idStudentEditText.getText().toString(),
+                        emailStudentEditText.getText().toString(),passwordStudent.getText().toString(),
                         nameStudentEditText.getText().toString(),lastName1EditText.getText().toString() +
                         " " + lastName2EditText.getText().toString(),
                         studentSelectGradeSpinner.getSelectedItemPosition() + 1);
@@ -227,6 +229,7 @@ public class StudentDetailActivity extends AppCompatActivity {
             lastName2EditText.setText(student.getLastname().split(" ")[1]);
             emailStudentEditText.setText(student.getEmail());
             studentSelectGradeSpinner.setSelection(student.getGrade() - 1);
+            passwordStudent.setText(student.getPassword());
             updateMode = true;
             getCourses();
         } catch (Exception e){

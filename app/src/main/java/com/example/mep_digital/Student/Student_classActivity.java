@@ -247,7 +247,8 @@ public class Student_classActivity extends AppCompatActivity implements AdapterV
 
     }
     // cambio de vista para el boton
-    private void ChangeView(View view){ finish();
+    private void ChangeView(View view){
+        finish();
          startActivity(new Intent(Student_classActivity.this,List_classActivity.class));
          Intent objI = new Intent(Student_classActivity.this,List_classActivity.class);
          startActivity(objI);

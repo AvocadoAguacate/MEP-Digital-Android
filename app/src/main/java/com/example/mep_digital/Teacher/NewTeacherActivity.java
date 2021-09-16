@@ -24,6 +24,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,7 +122,12 @@ public class NewTeacherActivity extends AppCompatActivity {
                 String description = newTextEditText.getText().toString();
 
                 if(!title.isEmpty() && !description.isEmpty()){
-                    submitDate = Calendar.getInstance().getTime().toString();
+                     Calendar calendar = Calendar.getInstance();
+                     int month = calendar.get(Calendar.MONTH) + 1;
+                    submitDate = calendar.get(Calendar.YEAR)+"-"+ month + "-" +
+                            calendar.get(Calendar.DAY_OF_MONTH) + "T" +
+                            calendar.get(Calendar.HOUR_OF_DAY) + ":" +
+                            calendar.get(Calendar.MINUTE)+":00.722Z";;
                     if(updateMode){
                         New putNews = new New(title,description,submitDate);
                         Call<Message> call = RetrofitClient.getInstance().getMyApi().putNews(idCourse,news.get_id(),putNews);

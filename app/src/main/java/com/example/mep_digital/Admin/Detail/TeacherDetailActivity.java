@@ -153,7 +153,16 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         Message message = response.body();
                         Toast.makeText(getApplicationContext(),message.getMessage(), Toast.LENGTH_LONG).show();
                     } catch (Exception e){
-                        Toast.makeText(getApplicationContext(),"No se pudo eliminar", Toast.LENGTH_LONG).show();
+                        JsonParser parser = new JsonParser();
+                        JsonElement mJson = null;
+                        try {
+                            mJson = parser.parse(response.errorBody().string());
+                            Gson gson = new Gson();
+                            Message errorResponse = gson.fromJson(mJson, Message.class);
+                            Toast.makeText(TeacherDetailActivity.this,errorResponse.getMessage(),Toast.LENGTH_LONG).show();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     } finally {
                         goBackWithIntent();
                     }
