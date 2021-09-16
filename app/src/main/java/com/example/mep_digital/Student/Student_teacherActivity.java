@@ -25,6 +25,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,18 +55,21 @@ public class Student_teacherActivity extends AppCompatActivity {
     private TextView name;
     private TextView phone;
     private TextView email;
+    private TextView qualitificationStudentTeacher;
     private String text;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_teacher);
-
+        qualitificationStudentTeacher = findViewById(R.id.qualitificationStudentTeacher);
         getData();
         name= findViewById(R.id.NameTextView);
         phone=findViewById(R.id.phoneTextView);
         email=findViewById(R.id.EmailtextView);
+
         updateAll();
 
         backStudentButton = findViewById(R.id.backStudentButton);
@@ -126,11 +131,26 @@ public class Student_teacherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         teacher = (Teacher)intent.getSerializableExtra("teacher");
         studentId = intent.getStringExtra("studentId");
+        getPromTeacher();
         //Saque toda la info de teacher
     }
 
+    private void getPromTeacher(){
+        if(teacher.getRatings() != null){
+            if(teacher.getRatings().size() > 0){
+                int sum = 0;
+                for (int i = 0; i < teacher.getRatings().size(); i++) {
+                    sum += teacher.getRatings().get(i).getRating();
+                }
+                double result = (double) sum / teacher.getRatings().size();
+                df2.setRoundingMode(RoundingMode.DOWN);
+                qualitificationStudentTeacher.setText("Calificación promedio: " + df2.format(result) + "/5");
+            }
+        }
+    }
+
     private void updateAll(){
-       text =teacher.getName();
+       text =teacher.getName() + " " + teacher.getLastname();
        name.setText(text);
        text=teacher.getEmail();
        email.setText(text);

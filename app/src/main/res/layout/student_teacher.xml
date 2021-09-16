@@ -38,6 +38,12 @@
         android:spinnerMode="dialog"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/qualitificationStudentTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/qualification" />
+
     <Button
         android:id="@+id/backStudentButton"
         android:layout_width="match_parent"
