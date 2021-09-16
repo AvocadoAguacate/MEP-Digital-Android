@@ -93,8 +93,8 @@ public class ClassDetailActivity extends AppCompatActivity  {
         daysWeek = getResources().getStringArray(R.array.week_days);
         checkedDays = new boolean[daysWeek.length];
         //
-        loadData();
         setSpinner();
+        loadData();
         setButtons();
     }
 
@@ -103,7 +103,6 @@ public class ClassDetailActivity extends AppCompatActivity  {
                 R.array.grade_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         courseSelectGradeSpinner.setAdapter(adapter);
-        courseSelectGradeSpinner.setSelection(0);
     }
 
     private void goBackWithIntent(){
@@ -468,7 +467,7 @@ public class ClassDetailActivity extends AppCompatActivity  {
             course = (Course)intent.getSerializableExtra("course");
             nameCourseAdminEditText.setText(course.getName());
             idCourseAdminEditText.setText(course.getId());
-            courseSelectGradeSpinner.setSelection(course.getGrade()-1);
+            courseSelectGradeSpinner.setSelection(course.getGrade() - 1);
             listSchedule = course.getSchedule();
             getScheduleCourseToPrint();
         }
