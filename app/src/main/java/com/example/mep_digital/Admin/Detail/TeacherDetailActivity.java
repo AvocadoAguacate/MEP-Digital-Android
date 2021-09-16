@@ -41,6 +41,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private EditText lastName1TeacherEditText;
     private EditText lastName2TeacherEditText;
     private EditText emailTeacherEditText;
+    private EditText passwordTeacher;
     private TextView teacherDetailTextView;
     private Button deleteTeacherButton;
     private TextView qualificationTeacherTextView;
@@ -67,6 +68,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         qualificationTeacherTextView = findViewById(R.id.qualificationTeacherTextView);
         studentListCoursesTextView = findViewById(R.id.studentListCoursesTextView);
         courseTeacherListView = findViewById(R.id.courseTeacherListView);
+        passwordTeacher = findViewById(R.id.passwordTeacher);
         //Cargando profesor
         tryLoadData();
 
@@ -75,8 +77,13 @@ public class TeacherDetailActivity extends AppCompatActivity {
     public void saveData(View view){
         if(checkData()){
             if(updateMode){
+                String password = "";
+                String passwordField = passwordTeacher.getText().toString();
+                if(!passwordField.isEmpty()){
+                    password = passwordField;
+                }
                 UpdateTeacher updateTeacher = new UpdateTeacher(emailTeacherEditText.getText().toString(),
-                        idTeacherEditText.getText().toString(),nameTeacherEditText.getText().toString(),
+                        password,nameTeacherEditText.getText().toString(),
                         lastName1TeacherEditText.getText().toString() + " " + lastName2TeacherEditText.getText().toString());
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().putTeacher(idTeacherEditText.getText().toString(),updateTeacher);
                 call.enqueue(new Callback<Message>() {
@@ -100,8 +107,13 @@ public class TeacherDetailActivity extends AppCompatActivity {
                 });
 
             } else {
+                String password = "";
+                String passwordField = passwordTeacher.getText().toString();
+                if(passwordField.isEmpty()){
+                    password = idTeacherEditText.getText().toString();
+                }
                 CreateTeacher createTeacher = new CreateTeacher(idTeacherEditText.getText().toString(),
-                        emailTeacherEditText.getText().toString(),idTeacherEditText.getText().toString(),
+                        emailTeacherEditText.getText().toString(),password,
                         nameTeacherEditText.getText().toString(),lastName1TeacherEditText.getText().toString() +
                         " " + lastName2TeacherEditText.getText().toString(),1);
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().postTeacher(createTeacher);

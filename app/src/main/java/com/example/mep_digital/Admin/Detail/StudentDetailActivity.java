@@ -97,8 +97,13 @@ public class StudentDetailActivity extends AppCompatActivity {
     public void saveData(View view){
         if(checkData()){
             if(updateMode){
+                String password = "";
+                String passwordField = passwordStudent.getText().toString();
+                if(!passwordField.isEmpty()){
+                    password = passwordField;
+                }
                 UpdateStudent updateStudent = new UpdateStudent(emailStudentEditText.getText().toString(),
-                        passwordStudent.getText().toString(),nameStudentEditText.getText().toString(),
+                        password,nameStudentEditText.getText().toString(),
                         lastName1EditText.getText().toString() + " " + lastName2EditText.getText().toString(),
                         studentSelectGradeSpinner.getSelectedItemPosition() + 1);
                 Call<Message> call = RetrofitClient.getInstance().getMyApi().putStudent(idStudentEditText.getText().toString(),updateStudent);
@@ -132,8 +137,13 @@ public class StudentDetailActivity extends AppCompatActivity {
                 });
 
             } else { //New student
+                String password = "";
+                String passwordField = passwordStudent.getText().toString();
+                if(passwordField.isEmpty()){
+                    password = idStudentEditText.getText().toString();
+                }
                 CreateStudent createStudent = new CreateStudent(idStudentEditText.getText().toString(),
-                        emailStudentEditText.getText().toString(),passwordStudent.getText().toString(),
+                        emailStudentEditText.getText().toString(),password,
                         nameStudentEditText.getText().toString(),lastName1EditText.getText().toString() +
                         " " + lastName2EditText.getText().toString(),
                         studentSelectGradeSpinner.getSelectedItemPosition() + 1);
@@ -180,6 +190,7 @@ public class StudentDetailActivity extends AppCompatActivity {
         ){
             return false;
         }
+
         return true;
     }
 
@@ -225,11 +236,15 @@ public class StudentDetailActivity extends AppCompatActivity {
             idStudentEditText.setText(student.getId());
             idStudentEditText.setEnabled(false);
             nameStudentEditText.setText(student.getName());
-            lastName1EditText.setText(student.getLastname().split(" ")[0]);
-            lastName2EditText.setText(student.getLastname().split(" ")[1]);
+            if(student.getLastname().contains(" ")){
+                lastName1EditText.setText(student.getLastname().split(" ")[0]);
+                lastName2EditText.setText(student.getLastname().split(" ")[1]);
+            } else {
+                lastName1EditText.setText(student.getLastname());
+                lastName2EditText.setText(student.getLastname());
+            }
             emailStudentEditText.setText(student.getEmail());
             studentSelectGradeSpinner.setSelection(student.getGrade() - 1);
-            passwordStudent.setText(student.getPassword());
             updateMode = true;
             getCourses();
         } catch (Exception e){
