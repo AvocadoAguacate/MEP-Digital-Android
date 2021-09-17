@@ -58,9 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        editTextUser.setText("ff@mail.com");
-        editTextPassword.setText("654321");
-        spinner.setSelection(2);
+        //Fast login student withou courses
+//        editTextUser.setText("ff@mail.com");
+//        editTextPassword.setText("654321");
+//        spinner.setSelection(2);
     }
 
     /**
