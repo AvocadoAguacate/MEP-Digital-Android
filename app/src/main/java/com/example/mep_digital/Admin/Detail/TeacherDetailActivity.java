@@ -107,9 +107,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
                 });
 
             } else {
-                String password = "";
-                String passwordField = passwordTeacher.getText().toString();
-                if(passwordField.isEmpty()){
+                String password = passwordTeacher.getText().toString();
+                if(password.isEmpty()){
                     password = idTeacherEditText.getText().toString();
                 }
                 CreateTeacher createTeacher = new CreateTeacher(idTeacherEditText.getText().toString(),

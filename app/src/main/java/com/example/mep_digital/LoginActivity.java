@@ -58,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        editTextUser.setText("ff@mail.com");
+        editTextPassword.setText("654321");
+        spinner.setSelection(2);
     }
 
     /**
@@ -129,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         LoginPost loginPost = new LoginPost(editTextUser.getText().toString(),
                 editTextPassword.getText().toString(),userType);
+        System.out.println(loginPost);
         //button.setText(loginPost.toString());
         Call<LoginReturn> call = RetrofitClient.getInstance().getMyApi().postLogin(loginPost);
         call.enqueue(new Callback<LoginReturn>() {
@@ -138,8 +142,10 @@ public class LoginActivity extends AppCompatActivity {
                 LoginReturn loginReturn = response.body();
                 try {
                     Toast.makeText(getApplicationContext(), loginReturn.getEmail(),Toast.LENGTH_LONG).show();
-                    router();
-
+                    System.out.println("----------------------------------------------");
+                    System.out.println(loginReturn.toString());
+                    System.out.println("----------------------------------------------");
+                    router(loginReturn.getId());
                 }catch (Exception e){
                     JsonParser parser = new JsonParser();
                     JsonElement mJson = null;
@@ -162,15 +168,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void router(){
+    private void router(String id){
         if(spinner.getSelectedItem().toString().contains("Adm")){
             goToAdminActivity();
         } else {
-            String userId = editTextUser.getText().toString();
             if (spinner.getSelectedItem().toString().contains("Est")) {
-            goToStudentActivity(userId);
+            goToStudentActivity(id);
             } else if (spinner.getSelectedItem().toString().contains("Pro")) {
-                goToTeacherActivity(userId);
+                goToTeacherActivity(id);
             }
         }
 

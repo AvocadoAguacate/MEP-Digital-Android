@@ -69,6 +69,9 @@ public class List_classActivity extends AppCompatActivity{
     private void getCourses() {
         Intent intent = getIntent();
         studentId = intent.getStringExtra("studentId");
+        System.out.println("----------------------------------------------");
+        System.out.println("studentId: "+studentId);
+        System.out.println("----------------------------------------------");
         Call<ListCourses> call = RetrofitClient.getInstance().getMyApi().getStudentCourses(studentId);
         call.enqueue(new Callback<ListCourses>() {
             @Override

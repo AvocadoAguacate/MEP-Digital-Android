@@ -98,4 +98,15 @@ public class CreateStudent {
         this.grade = grade;
     }
 
+    @Override
+    public String toString() {
+        return "CreateStudent{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", grade=" + grade +
+                '}';
+    }
 }

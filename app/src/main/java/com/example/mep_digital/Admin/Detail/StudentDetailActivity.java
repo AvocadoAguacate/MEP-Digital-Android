@@ -137,9 +137,8 @@ public class StudentDetailActivity extends AppCompatActivity {
                 });
 
             } else { //New student
-                String password = "";
-                String passwordField = passwordStudent.getText().toString();
-                if(passwordField.isEmpty()){
+                String password = passwordStudent.getText().toString();
+                if(password.isEmpty()){
                     password = idStudentEditText.getText().toString();
                 }
                 CreateStudent createStudent = new CreateStudent(idStudentEditText.getText().toString(),

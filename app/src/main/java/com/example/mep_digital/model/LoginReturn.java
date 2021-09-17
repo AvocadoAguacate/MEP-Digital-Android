@@ -7,6 +7,9 @@ public class LoginReturn {
 
     @SerializedName("_id")
     @Expose
+    private String _id;
+    @SerializedName("id")
+    @Expose
     private String id;
     @SerializedName("email")
     @Expose
@@ -22,6 +25,9 @@ public class LoginReturn {
         return id;
     }
 
+    public void set_Id(String id) {
+        this._id = id;
+    }
     public void setId(String id) {
         this.id = id;
     }
